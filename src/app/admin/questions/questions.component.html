@@ -1,0 +1,28 @@
+<section>
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th>#</th>
+        <th>Question</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr *ngFor="let question of questions">
+        <td>{{question.id}}</td>
+        <td>{{question.body}}</td>
+        <td><button class="btn btn-success" (click)="modalAnswer(question)">Answer</button></td>
+      </tr>
+    </tfoot>
+  </table>
+  <div class="modal" *ngIf="modal" (click)="hideModal()">
+    <div class="windowModal" (click)="$event.stopPropagation()">
+      <label for="">
+        Answer: 
+        <input type="text" [(ngModel)]="answer" placeholder="type here answer...">
+        <button class="btn btn-success" (click)="sendAnswer()">Send!</button>
+      </label>
+      <p *ngIf="empty">*Field answer is empty!</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,16 @@
+main {
+    font-size: 30px;
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+        border-bottom: 1px solid rgb(40, 221, 40);
+        padding: 10px;
+    }
+    .picture {
+        font-size: 90px;
+    }
+}

@@ -1,0 +1,164 @@
+import { Component, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { ProductService } from 'src/app/shared/services/product.service';
+import { IProduct } from 'src/app/shared/interfaces/product';
+import { ICategory } from '../../shared/interface/ICategory';
+import { IBrand } from '../../shared/interface/IBrand';
+import { ViewService } from '../../services/view.service';
+import { CategoryImagePipe } from '../../shared/pipes/category-image.pipe';
+
+@Component({
+  selector: 'app-storeinfo',
+  templateUrl: './storeinfo.component.html',
+  styleUrls: ['./storeinfo.component.scss']
+})
+export class StoreInfoComponent implements OnInit {
+  products: Array<IProduct>;
+  categories: Array<ICategory>;
+  brands: Array<IBrand>;
+  selectValue = 'DOLLAR';
+  brandsArray: Array<string> = [];
+  filteredProduct: Array<IProduct> = [];
+  shoppingCart: Array<IProduct> = [];
+  viewProduct: IProduct;
+  showSearch = false;
+  arrayCategory: Array<string> = [];
+  arrayBrands: Array<string> = [];
+  basketProduct: Array<IProduct> = [];
+  hideCategoryFilter = true;
+  imageCategory: string;
+  countBasket: number;
+  maxNumberPage: number;
+  currentNumberPage: number;
+  constructor(
+    private productService: ProductService,
+    private viewService: ViewService,
+  ) {
+    this.currentNumberPage = 1;
+   }
+
+  ngOnInit() {
+    this.getProducts();
+    this.getCategories();
+    this.getBrands();
+    this.getBasketProduct();
+  }
+  public clickOnCategory(category: string): void {
+    this.currentNumberPage = 1;
+    this.arrayCategory = [];
+    this.hideCategoryFilter = false;
+    this.imageCategory = category;
+    this.toTop();
+  }
+  public basketCounter(): void {
+    this.productService.countBasket = this.basketProduct.length;
+  }
+  public filterCheckboxCategory(newCategory: string): void {
+    this.currentNumberPage = 1;
+    const foundIndex = this.arrayCategory.findIndex(category => category === newCategory);
+    if (foundIndex === -1) {
+      this.arrayCategory.push(newCategory);
+    } else {
+      this.arrayCategory.splice(foundIndex, 1);
+    }
+    this.getProducts();
+  }
+  public filterCheckboxBrands(newBrand: string) {
+    this.currentNumberPage = 1;
+    const foundIndex = this.arrayBrands.findIndex(brand => brand === newBrand);
+    if (foundIndex === -1) {
+      this.arrayBrands.push(newBrand);
+    } else {
+      this.arrayBrands.splice(foundIndex, 1);
+    }
+    this.getProducts();
+  }
+
+  public addToBasket(product: IProduct): void {
+    this.productService.addBasketProducts(product).subscribe(
+      () => this.getBasketProduct(),
+    );
+  }
+  // tslint:disable-next-line:use-life-cycle-interface
+  public onFilter = (value) => {
+    this.filteredProduct = this.products.filter(({ name }) =>
+      name.toLowerCase().includes(value.toLowerCase())
+    );
+    this.currentNumberPage = 1;
+  }
+  public getProducts(): void {
+    this.productService.getJsonProduct().subscribe(
+      data => {
+        this.products = data;
+        this.filteredProduct = this.products;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  public getCategories(): void {
+    this.productService.getJsonCategory().subscribe(
+      data => {
+        this.categories = data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+  public getBasketProduct(): void {
+    this.productService.getBasketProduct().subscribe(
+      data => {
+        this.basketProduct = data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+  public getBrands(): void {
+    this.productService.getJsonBrands().subscribe(
+      data => {
+        this.brands = data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+  public clickSearch(): void {
+    this.showSearch = !this.showSearch;
+  }
+  public existInBasket(currentProduct: IProduct): boolean {
+    this.basketCounter();
+    return this.basketProduct.some(product => product.id === currentProduct.id);
+  }
+  // PAGINATION 
+  public previous(): void {
+    this.currentNumberPage --;
+    this.toTop();
+  }
+  public next(): void {
+    this.currentNumberPage ++;
+    this.toTop();
+  }
+  public last(): void {
+    this.currentNumberPage = this.maxNumPage();
+    this.toTop();
+  }
+  public first(): void {
+    this.currentNumberPage = 1;
+    this.toTop();
+  }
+  public toTop(): void {
+    const titleTop = document.getElementById('title').offsetTop;
+    window.scrollTo({
+      top: titleTop - 100,
+      behavior: 'smooth'
+  });
+  }
+  public maxNumPage(): number {
+    return Math.ceil(this.viewService.arrayProductLength / 10);
+  }
+}
