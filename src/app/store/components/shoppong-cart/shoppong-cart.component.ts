@@ -3,8 +3,8 @@ import { ProductService } from 'src/app/shared/services/product.service';
 import { IProduct } from 'src/app/shared/interfaces/product';
 import { OrderAdminService } from 'src/app/shared/services/order-admin.service';
 import { Order } from 'src/app/shared/clases/order';
-import { Product } from 'src/app/shared/clases/product';
-import { UserService } from 'src/app/shared/services/user.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/redux/app.state';
 
 @Component({
   selector: 'app-shoppong-cart',
@@ -24,19 +24,24 @@ export class ShoppongCartComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private orderAdminService: OrderAdminService,
-    private userService: UserService,
-    ) { }
+    private store: Store<AppState>
+    ) {
+      this.store.select('registerPage').subscribe(d => {
+        this.firstName = d.currentUser.firstName,
+        this.secondName = d.currentUser.secondName;
+      });
+     }
 
   ngOnInit() {
     this.getBasketProduct();
-    this.getCurrentUser();
+    // this.getCurrentUser();
   }
-  public getCurrentUser(): void {
-    if (this.userService.currentUser != undefined) {
-      this.firstName = this.userService.currentUser.firstName;
-      this.secondName = this.userService.currentUser.secondName;
-    }
-  }
+  // public getCurrentUser(): void {
+  //   if (this.userService.currentUser !== undefined) {
+  //     this.firstName = this.userService.currentUser.firstName;
+  //     this.secondName = this.userService.currentUser.secondName;
+  //   }
+  // }
   public getBasketProduct(): void {
     this.productService.getBasketProduct().subscribe(
       data => {
@@ -71,7 +76,7 @@ export class ShoppongCartComponent implements OnInit {
       // tslint:disable-next-line:max-line-length
       this.orderAdminService.addJsonOrderProduct(new Order(this.myProducts, this.firstName, this.secondName, this.address, 'created')).subscribe();
       // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.myProducts.length; i++ ) {
+      for (let i = 0; i < this.myProducts.length; i++ ) {
         const index = this.myProducts[i].id;
         this.productService.delBasketsProducts(index).subscribe(() => {
           this.getBasketProduct();
@@ -89,10 +94,10 @@ export class ShoppongCartComponent implements OnInit {
     // for (let i = 0; i < this.myProducts.length; i++) {
     //   result += this.myProducts[i].price;
     // }
-    this.myProducts.reduce(function(a) {
+    this.myProducts.reduce(a => {
       result += a.price;
       return a;
-    })
+    });
     return result;
   }
 

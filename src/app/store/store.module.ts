@@ -32,4 +32,4 @@ import { PaginationPipe } from './shared/pipes/pagination.pipe';
     FormsModule,
   ]
 })
-export class StoreModule { }
+export class StoreeModule { }

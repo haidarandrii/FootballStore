@@ -513,7 +513,17 @@
       "id": 6
     }
   ],
-  "basketProducts": [],
+  "basketProducts": [
+    {
+      "id": 4,
+      "name": "Bayern shorts",
+      "price": 20,
+      "category": "shorts",
+      "image": "https://img.fcbayern.com/image/upload/f_auto,q_auto/t_productstage/eCommerce/produkte/21202/fc-bayern-short-home.png",
+      "brands": "nike",
+      "descriptions": "Lorem ipsum dolor sit amet consectetur adipisicing elit"
+    }
+  ],
   "adminOrder": [
     {
       "products": [
@@ -1695,76 +1705,12 @@
   ],
   "users": [
     {
-      "firstName": "sdakf",
-      "secondName": "jhgdfkjhgsaf",
-      "dateOfBirth": "1997-11-01",
-      "email": "jkdaa",
-      "password": "jkdahkadjfsh",
-      "id": 1
-    },
-    {
-      "firstName": "Андрій",
-      "secondName": "Гайдар",
-      "dateOfBirth": "1997-01-11",
-      "email": "haidar.andrii@gmai.com",
-      "password": "5555",
-      "id": 2
-    },
-    {
-      "firstName": "Eden",
-      "secondName": "Hazard",
-      "dateOfBirth": "1983-12-04",
-      "email": "hazard@gmail.com",
-      "password": "5555",
-      "id": 4
-    },
-    {
-      "firstName": "Luca",
-      "secondName": "Modric",
-      "dateOfBirth": "1984-12-04",
-      "email": "modric@gmail.com",
-      "password": "real",
-      "id": 5
-    },
-    {
-      "firstName": "Lionel",
-      "secondName": "Messi",
-      "dateOfBirth": "1974-09-11",
-      "email": "messi@gmail.com",
-      "password": "messi",
-      "id": 6
-    },
-    {
-      "firstName": "Zinedin",
-      "secondName": "Zidan",
-      "dateOfBirth": "1233-12-12",
-      "email": "zidan@mail.ru",
-      "password": "zidan",
-      "id": 7
-    },
-    {
-      "firstName": "Pavlo",
-      "secondName": "Haidar",
-      "dateOfBirth": "2130-02-10",
-      "email": "haidar.pavlo@gmail.com",
-      "password": "1111",
-      "id": 8
-    },
-    {
-      "firstName": "Гайдар ",
-      "secondName": "Оксана ",
-      "dateOfBirth": "1996-08-21",
-      "email": "haidar.oxanka@gmail.com",
-      "password": "12345",
-      "id": 9
-    },
-    {
-      "firstName": "Cristiano",
-      "secondName": "Ronaldo",
+      "firstName": "aaaa",
+      "secondName": "aaaa",
       "dateOfBirth": "1993-12-31",
-      "email": "ronaldo@gmail.com",
-      "password": "1234",
-      "id": 10
+      "email": "aaaa",
+      "password": "aaaa",
+      "id": 1
     }
   ]
 }

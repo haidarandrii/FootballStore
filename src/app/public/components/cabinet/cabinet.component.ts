@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from 'src/app/shared/interfaces/user';
-import { UserService } from 'src/app/shared/services/user.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/redux/app.state';
 
 @Component({
   selector: 'app-cabinet',
@@ -9,12 +10,9 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class CabinetComponent implements OnInit {
   currentUser: IUser;
-  constructor(private userService: UserService) { }
-
-  ngOnInit() {
-    this.getCurrentUser();
+  constructor(private store: Store<AppState>) {
+    this.store.select('registerPage').subscribe(d => this.currentUser = d.currentUser);
   }
-  public getCurrentUser(): void {
-    this.currentUser =  this.userService.currentUser;
+  ngOnInit() {
   }
 }

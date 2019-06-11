@@ -5,6 +5,9 @@ import { ICategory } from '../../shared/interface/ICategory';
 import { IBrand } from '../../shared/interface/IBrand';
 import { ViewService } from '../../services/view.service';
 import { CategoryImagePipe } from '../../shared/pipes/category-image.pipe';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/redux/app.state';
+import { SuccessLoadProduct, StartLoadProduct, FailedLoadProduct } from 'src/app/redux/Actions/product.actions';
 
 @Component({
   selector: 'app-storeinfo',
@@ -32,6 +35,7 @@ export class StoreInfoComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private viewService: ViewService,
+    private store: Store<AppState>
   ) {
     this.currentNumberPage = 1;
    }
@@ -86,13 +90,15 @@ export class StoreInfoComponent implements OnInit {
     this.currentNumberPage = 1;
   }
   public getProducts(): void {
+    this.store.dispatch(new StartLoadProduct());
     this.productService.getJsonProduct().subscribe(
       data => {
         this.products = data;
+        this.store.dispatch(new SuccessLoadProduct(data));
         this.filteredProduct = this.products;
       },
       err => {
-        console.log(err);
+        this.store.dispatch(new FailedLoadProduct(err));
       }
     );
   }
@@ -134,7 +140,7 @@ export class StoreInfoComponent implements OnInit {
     this.basketCounter();
     return this.basketProduct.some(product => product.id === currentProduct.id);
   }
-  // PAGINATION 
+  // PAGINATION
   public previous(): void {
     this.currentNumberPage --;
     this.toTop();

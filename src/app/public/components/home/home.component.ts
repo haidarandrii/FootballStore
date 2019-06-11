@@ -1,7 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/shared/services/product.service';
 import { IProduct } from 'src/app/shared/interfaces/product';
-import { Product } from 'src/app/shared/clases/product';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/redux/app.state';
+import { StartLoadProduct, SuccessLoadProduct, FailedLoadProduct } from 'src/app/redux/Actions/product.actions';
+import { StartLoadBasketProduct } from 'src/app/redux/Actions/basket.product.actions';
 
 @Component({
   selector: 'app-home',
@@ -9,23 +12,36 @@ import { Product } from 'src/app/shared/clases/product';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  constructor(private productService: ProductService) {
-    this.getProduct();
-    this.getBasketProduct();
+  constructor(
+    private productService: ProductService,
+    private store: Store<AppState>) {
+      // this.store.select('productPage').subscribe(d => {
+      //   this.products = d.products;
+      //   console.log(d.products);
+      //   this.filteredProducts();
+      // });
+      this.getProduct();
+      this.getBasketProduct();
   }
   products: Array<IProduct>;
   basketProduct: Array<IProduct> = [];
   filterProduct: Array<IProduct> = [];
   ngOnInit() {
   }
-  private getProduct(): void {
+  public getProduct(): void {
+    this.store.dispatch(new StartLoadProduct());
+    this.store.select('productPage').subscribe(d => console.log(d));
     this.productService.getJsonProduct().subscribe(
       data => {
-        this.products = data;
-        this.filteredProducts();
+        // this.products = data;
+        this.store.dispatch(new SuccessLoadProduct(data));
+        this.store.select('productPage').subscribe(d => {
+          this.products = d.products;
+          this.filteredProducts();
+        });
       },
       err => {
-        console.log(err);
+        this.store.dispatch(new FailedLoadProduct(err));
       }
     );
   }
@@ -57,6 +73,8 @@ export class HomeComponent implements OnInit {
     }
   }
   public getBasketProduct(): void {
+    this.store.dispatch(new StartLoadBasketProduct());
+    this.store.select('basketProductPage').subscribe(d => console.log(d.loading));
     this.productService.getBasketProduct().subscribe(
       data => {
         this.basketProduct = data;

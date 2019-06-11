@@ -4,6 +4,9 @@ import { IProduct } from '../shared/interfaces/product';
 import { UserService } from '../shared/services/user.service';
 import { User } from '../shared/clases/user';
 import { IUser } from '../shared/interfaces/user';
+import { Store } from '@ngrx/store';
+import { AppState } from '../redux/app.state';
+import { SingUp, Failed, SingIn, StartProccess } from '../redux/Actions/register.action';
 
 @Component({
   selector: 'app-header',
@@ -18,6 +21,7 @@ export class HeaderComponent implements OnInit {
   ifRegistration = false;
   inputs = [];
   // REGESTRATION
+  loader = false;
   firstName: string;
   secondName: string;
   dateOfBirth;
@@ -32,7 +36,10 @@ export class HeaderComponent implements OnInit {
   currentUser: IUser;
   constructor(
     private productService: ProductService,
-    private userSevice: UserService) {
+    private userSevice: UserService,
+    private store: Store<AppState>,
+  ) {
+    this.store.select('registerPage').subscribe(d => this.loader = d.loading);
   }
   public scroll: number;
 
@@ -91,35 +98,39 @@ export class HeaderComponent implements OnInit {
     this.dateOfBirth = null;
   }
   public showPassword(): void {
-    let input = document.getElementsByTagName('input');
-    if(input.length > 0) {
-      for(let i = 0; i < input.length; i++) {
+    const input = document.getElementsByTagName('input');
+    if (input.length > 0) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < input.length; i++) {
         if (input[i].type.toLowerCase() === 'password') {
           this.inputs.push(input[i]);
         }
       }
     }
-    if(this.inputs[0].type === 'password') {
+    if (this.inputs[0].type === 'password') {
+      // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.inputs.length; i++) {
         this.inputs[i].type = 'text';
       }
     } else {
+      // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.inputs.length; i++) {
         this.inputs[i].type = 'password';
       }
     }
-    
+
   }
   public newUser(): void {
-    if (this.password === this.passwordRepeat){
+    this.store.dispatch(new StartProccess());
+    if (this.password === this.passwordRepeat) {
       this.ifRegistration = false;
       this.singIn = true;
-      let user: IUser = new User(
+      const user: IUser = new User(
       this.firstName,
       this.secondName,
       this.dateOfBirth,
       this.email,
-      this.password)
+      this.password);
       this.passwordRepeat = null;
       this.firstName = null;
       this.secondName = null;
@@ -128,35 +139,42 @@ export class HeaderComponent implements OnInit {
       this.dateOfBirth = null;
       this.wrongPassword = false;
       this.userSevice.addUser(user).subscribe(() => {
-        this.getUser();
+        this.userSevice.getUser();
+        this.store.dispatch(new SingUp());
       });
-    }
-    else {
+    } else {
       this.wrongPassword = true;
+      this.store.dispatch(new Failed({error: 'Your data is wrong'}));
+      console.log(this.store);
     }
   }
   public getUser(): void {
     this.userSevice.getUser().subscribe(
       data => {
         this.allUsers = data;
-        console.log(this.allUsers);
       },
       err => {
         console.log(err);
       }
-    )
+    );
   }
   public checkUser(): void {
+    this.store.dispatch(new StartProccess());
+    this.store.select('registerPage').subscribe( d => console.log(d.loading));
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.allUsers.length; i++) {
       if (this.singInEmail === this.allUsers[i].email && this.singInPassword === this.allUsers[i].password) {
         this.onLogin = true;
         this.singIn = false;
         this.currentUser = this.allUsers[i];
-        this.userSevice.currentUser = this.currentUser;
+        // this.userSevice.currentUser = this.currentUser;
+        this.store.dispatch(new SingIn(this.currentUser));
+        this.store.select('registerPage').subscribe(d => console.log(d.currentUser));
         this.singInEmail = null;
         this.singInPassword = null;
         this.wrongPassword = false;
       } else {
+        this.store.dispatch(new Failed({error: 'your data is wrong'}));
         this.wrongPassword = true;
       }
     }

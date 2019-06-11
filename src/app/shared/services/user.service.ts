@@ -8,9 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
   private url: string;
-  public currentUser: IUser;
   constructor(private http: HttpClient) {
-    this.url = 'http://localhost:3000/users'
+    this.url = 'http://localhost:3000/users';
    }
    public addUser(user: IUser): Observable<Array<IUser>> {
     return this.http.post<Array<IUser>>(this.url, user);
