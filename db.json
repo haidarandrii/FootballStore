@@ -522,6 +522,24 @@
       "image": "https://img.fcbayern.com/image/upload/f_auto,q_auto/t_productstage/eCommerce/produkte/21202/fc-bayern-short-home.png",
       "brands": "nike",
       "descriptions": "Lorem ipsum dolor sit amet consectetur adipisicing elit"
+    },
+    {
+      "id": 25,
+      "name": "Real Madric C.F. shorts",
+      "price": 45,
+      "category": "shorts",
+      "image": "https://www.teamzo.com/images/real-madrid-2014-15-adidas-home-football-shorts.jpg",
+      "brands": "adidas",
+      "descriptions": "The best club in the world"
+    },
+    {
+      "id": 45,
+      "name": "Reebok boots",
+      "price": 60,
+      "category": "boots",
+      "image": "https://ak1.ostkcdn.com/images/products/18035626/Reebok-PRO-BURNER-SPD-III-LOW-M3-Mens-Football-Shoes-White-Orange-94538e52-12a2-4f13-ada8-c64350e4d2de_600.jpg",
+      "brands": "reebok",
+      "descriptions": "lorem lorem"
     }
   ],
   "adminOrder": [

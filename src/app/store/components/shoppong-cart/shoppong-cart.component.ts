@@ -5,6 +5,7 @@ import { OrderAdminService } from 'src/app/shared/services/order-admin.service';
 import { Order } from 'src/app/shared/clases/order';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
+import { StartLoadBasketProduct, SuccessLoadBaskerProduct, FailedLoadBasketProduct } from 'src/app/redux/Actions/basket.product.actions';
 
 @Component({
   selector: 'app-shoppong-cart',
@@ -30,8 +31,7 @@ export class ShoppongCartComponent implements OnInit {
         this.firstName = d.currentUser.firstName,
         this.secondName = d.currentUser.secondName;
       });
-     }
-
+    }
   ngOnInit() {
     this.getBasketProduct();
     // this.getCurrentUser();
@@ -43,12 +43,14 @@ export class ShoppongCartComponent implements OnInit {
   //   }
   // }
   public getBasketProduct(): void {
+    this.store.dispatch(new StartLoadBasketProduct());
     this.productService.getBasketProduct().subscribe(
       data => {
-        this.myProducts = data;
+        this.store.dispatch(new SuccessLoadBaskerProduct(data));
+        this.store.select('basketProductPage').subscribe(d => this.myProducts = d.basketProduct);
       },
       err => {
-        console.log(err);
+        this.store.dispatch(new FailedLoadBasketProduct(err));
       }
     );
   }

@@ -9,18 +9,18 @@ const initialState: IProductState = {
 
 export function productReducer(state = initialState, action: ActionWithPayload) {
     switch (action.type) {
-        case ACTIONS.FAILED:
+        case ACTIONS.FAILED_LOAD_PRODUCT:
             return {
                 ...state,
                 loading: false,
                 error: action.payload
             };
-        case ACTIONS.START:
+        case ACTIONS.START_LOAD_PRODUCT:
             return {
                 ...state,
                 loading: true
             };
-        case ACTIONS.SUCCESS:
+        case ACTIONS.SUCCESS_LOAD_PRODUCT:
             return {
                 ...state,
                 products: action.payload,

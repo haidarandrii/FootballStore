@@ -9,18 +9,18 @@ const initialState: IBasketProduct = {
 
 export function basketProductReducer(state = initialState, action: ActionWithPayload) {
     switch (action.type) {
-        case ACTIONS.START:
+        case ACTIONS.START_LOAD_BASKET_PRODUCT:
             return {
                 ...state,
                 loading: true
             };
-        case ACTIONS.FAILED:
+        case ACTIONS.FAILED_LOAD_BASKET_PRODUCT:
             return {
                 ...state,
                 loading: false,
                 error: action.payload
             };
-        case ACTIONS.SUCCESS:
+        case ACTIONS.SUCCESS_LOAD_BASKET_PRODUCT:
             return {
                 ...state,
                 loading: false,

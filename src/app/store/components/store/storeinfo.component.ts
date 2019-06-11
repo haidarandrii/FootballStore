@@ -1,13 +1,13 @@
-import { Component, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/shared/services/product.service';
 import { IProduct } from 'src/app/shared/interfaces/product';
 import { ICategory } from '../../shared/interface/ICategory';
 import { IBrand } from '../../shared/interface/IBrand';
 import { ViewService } from '../../services/view.service';
-import { CategoryImagePipe } from '../../shared/pipes/category-image.pipe';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
 import { SuccessLoadProduct, StartLoadProduct, FailedLoadProduct } from 'src/app/redux/Actions/product.actions';
+import { StartLoadBasketProduct, SuccessLoadBaskerProduct, FailedLoadBasketProduct } from 'src/app/redux/Actions/basket.product.actions';
 
 @Component({
   selector: 'app-storeinfo',
@@ -38,8 +38,7 @@ export class StoreInfoComponent implements OnInit {
     private store: Store<AppState>
   ) {
     this.currentNumberPage = 1;
-   }
-
+  }
   ngOnInit() {
     this.getProducts();
     this.getCategories();
@@ -93,9 +92,8 @@ export class StoreInfoComponent implements OnInit {
     this.store.dispatch(new StartLoadProduct());
     this.productService.getJsonProduct().subscribe(
       data => {
-        this.products = data;
         this.store.dispatch(new SuccessLoadProduct(data));
-        this.filteredProduct = this.products;
+        this.store.select('productPage').subscribe(d => this.products = d.products);
       },
       err => {
         this.store.dispatch(new FailedLoadProduct(err));
@@ -114,12 +112,14 @@ export class StoreInfoComponent implements OnInit {
     );
   }
   public getBasketProduct(): void {
+    this.store.dispatch(new StartLoadBasketProduct());
     this.productService.getBasketProduct().subscribe(
       data => {
-        this.basketProduct = data;
+        this.store.dispatch(new SuccessLoadBaskerProduct(data));
+        this.store.select('basketProductPage').subscribe(d => this.basketProduct = d.basketProduct);
       },
       err => {
-        console.log(err);
+        this.store.dispatch(new FailedLoadBasketProduct(err));
       }
     );
   }

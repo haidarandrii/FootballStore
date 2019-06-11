@@ -4,7 +4,7 @@ import { IProduct } from 'src/app/shared/interfaces/product';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
 import { StartLoadProduct, SuccessLoadProduct, FailedLoadProduct } from 'src/app/redux/Actions/product.actions';
-import { StartLoadBasketProduct } from 'src/app/redux/Actions/basket.product.actions';
+import { StartLoadBasketProduct, SuccessLoadBaskerProduct, FailedLoadBasketProduct } from 'src/app/redux/Actions/basket.product.actions';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
       this.getProduct();
       this.getBasketProduct();
   }
+  loader: boolean;
   products: Array<IProduct>;
   basketProduct: Array<IProduct> = [];
   filterProduct: Array<IProduct> = [];
@@ -30,7 +31,6 @@ export class HomeComponent implements OnInit {
   }
   public getProduct(): void {
     this.store.dispatch(new StartLoadProduct());
-    this.store.select('productPage').subscribe(d => console.log(d));
     this.productService.getJsonProduct().subscribe(
       data => {
         // this.products = data;
@@ -74,13 +74,13 @@ export class HomeComponent implements OnInit {
   }
   public getBasketProduct(): void {
     this.store.dispatch(new StartLoadBasketProduct());
-    this.store.select('basketProductPage').subscribe(d => console.log(d.loading));
     this.productService.getBasketProduct().subscribe(
       data => {
-        this.basketProduct = data;
+        this.store.dispatch(new SuccessLoadBaskerProduct(data));
+        this.store.select('basketProductPage').subscribe(d => this.basketProduct = d.basketProduct);
       },
       err => {
-        console.log(err);
+        this.store.dispatch(new FailedLoadBasketProduct(err));
       }
     );
   }
