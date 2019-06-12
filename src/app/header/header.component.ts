@@ -20,11 +20,12 @@ export class HeaderComponent implements OnInit {
   singIn = false;
   ifRegistration = false;
   inputs = [];
+  failEmail = false;
   // REGESTRATION
   loader = false;
   firstName: string;
   secondName: string;
-  dateOfBirth;
+  dateOfBirth: Date = new Date(2000, 1, 1);
   email: string;
   password: string;
   passwordRepeat: string;
@@ -79,11 +80,14 @@ export class HeaderComponent implements OnInit {
     this.ifRegistration = false;
     this.singIn = !this.singIn;
     this.wrongPassword = false;
+    this.email = null;
   }
   public ifRegistrationTrue(): void {
     this.singIn = false;
     this.ifRegistration = !this.ifRegistration;
     this.wrongPassword = false;
+    this.singInEmail = null;
+    this.singInPassword = null;
   }
   public close(): void {
     this.singIn = false;
@@ -122,7 +126,14 @@ export class HeaderComponent implements OnInit {
   }
   public newUser(): void {
     this.store.dispatch(new StartProccess());
+    const existEmail = this.allUsers.some(user => user.email === this.email);
+    if (existEmail) {
+      return alert('This email has already used');
+    }
     if (this.password === this.passwordRepeat) {
+      this.firstName = this.firstName.toLowerCase();
+      this.secondName = this.secondName.toLowerCase();
+
       this.ifRegistration = false;
       this.singIn = true;
       const user: IUser = new User(
@@ -139,7 +150,7 @@ export class HeaderComponent implements OnInit {
       this.dateOfBirth = null;
       this.wrongPassword = false;
       this.userSevice.addUser(user).subscribe(() => {
-        this.userSevice.getUser();
+        this.getUser();
         this.store.dispatch(new SingUp());
       });
     } else {
@@ -160,6 +171,10 @@ export class HeaderComponent implements OnInit {
   }
   public checkUser(): void {
     this.store.dispatch(new StartProccess());
+    const existEmail = this.allUsers.some(user => user.email === this.singInEmail);
+    if (!existEmail) {
+      this.failEmail = true;
+    }
     this.store.select('registerPage').subscribe( d => console.log(d.loading));
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.allUsers.length; i++) {
@@ -173,6 +188,7 @@ export class HeaderComponent implements OnInit {
         this.singInEmail = null;
         this.singInPassword = null;
         this.wrongPassword = false;
+        this.failEmail = false;
       } else {
         this.store.dispatch(new Failed({error: 'your data is wrong'}));
         this.wrongPassword = true;

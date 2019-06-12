@@ -4,7 +4,7 @@ import { ACTIONS } from '../Actions/product.actions';
 const initialState: IProductState = {
     error: null,
     loading: false,
-    products: undefined
+    products: null
 };
 
 export function productReducer(state = initialState, action: ActionWithPayload) {

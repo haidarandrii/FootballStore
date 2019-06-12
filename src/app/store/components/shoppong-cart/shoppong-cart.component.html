@@ -1,3 +1,6 @@
+<div *ngIf="loader" class="loader">
+  <p>Loading....</p>
+</div>
 <div class="empty" *ngIf="myProducts.length === 0">
   <p><i class="fas fa-meh-rolling-eyes"></i></p>
   <p>Your basket is empty!</p>

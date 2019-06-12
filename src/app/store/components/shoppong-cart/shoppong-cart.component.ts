@@ -6,6 +6,8 @@ import { Order } from 'src/app/shared/clases/order';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
 import { StartLoadBasketProduct, SuccessLoadBaskerProduct, FailedLoadBasketProduct } from 'src/app/redux/Actions/basket.product.actions';
+import { StartDeleteBasketProduct, SuccessDeleteBasketProduct } from 'src/app/redux/Actions/delete.basket.product.actions';
+import { IUser } from 'src/app/shared/interfaces/user';
 
 @Component({
   selector: 'app-shoppong-cart',
@@ -14,23 +16,22 @@ import { StartLoadBasketProduct, SuccessLoadBaskerProduct, FailedLoadBasketProdu
 })
 export class ShoppongCartComponent implements OnInit {
   myProducts: Array<IProduct> = [];
-  firstName: string;
-  secondName: string;
+  currentUser: IUser;
   address: string;
   modalTrue = false;
   confirmModalTrue = false;
   goHomeTrue = false;
   modalSuccess = false;
   orderAdminProduct: Array<IProduct> = [];
+  loader = false;
   constructor(
     private productService: ProductService,
     private orderAdminService: OrderAdminService,
     private store: Store<AppState>
     ) {
-      this.store.select('registerPage').subscribe(d => {
-        this.firstName = d.currentUser.firstName,
-        this.secondName = d.currentUser.secondName;
-      });
+        this.store.select('registerPage').subscribe(d => {
+          this.currentUser = d.currentUser;
+        });
     }
   ngOnInit() {
     this.getBasketProduct();
@@ -47,7 +48,10 @@ export class ShoppongCartComponent implements OnInit {
     this.productService.getBasketProduct().subscribe(
       data => {
         this.store.dispatch(new SuccessLoadBaskerProduct(data));
-        this.store.select('basketProductPage').subscribe(d => this.myProducts = d.basketProduct);
+        this.store.select('basketProductPage').subscribe(d => {
+          this.myProducts = d.basketProduct;
+          this.loader = d.loading;
+        });
       },
       err => {
         this.store.dispatch(new FailedLoadBasketProduct(err));
@@ -56,8 +60,11 @@ export class ShoppongCartComponent implements OnInit {
   }
   public delProductBasket(product: IProduct): void {
     const id = product.id;
+    this.store.dispatch(new StartDeleteBasketProduct());
     this.productService.delBasketsProducts(id).subscribe(() => {
       this.getBasketProduct();
+      this.store.dispatch(new SuccessDeleteBasketProduct());
+      this.store.select('deleteBasketProductPage').subscribe(d => this.loader = d.loading);
     });
   }
   public clickModal(): void {
@@ -67,7 +74,8 @@ export class ShoppongCartComponent implements OnInit {
     this.modalSuccess = false;
   }
   public modalSuccesTrue(): void {
-    if ((this.firstName === null || undefined) || (this.secondName === null || undefined) || (this.address === undefined || null)) {
+    if ((this.currentUser.firstName === null || undefined)
+    || (this.currentUser.secondName === null || undefined) || (this.address === undefined || null)) {
       this.modalTrue = true;
     } else {
     this.modalSuccess = true;
@@ -75,8 +83,8 @@ export class ShoppongCartComponent implements OnInit {
     }
   }
   public confirm(): void {
-      // tslint:disable-next-line:max-line-length
-      this.orderAdminService.addJsonOrderProduct(new Order(this.myProducts, this.firstName, this.secondName, this.address, 'created')).subscribe();
+      this.orderAdminService.addJsonOrderProduct(new Order(this.myProducts,
+        this.currentUser.firstName, this.currentUser.secondName, this.address, 'created')).subscribe();
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.myProducts.length; i++ ) {
         const index = this.myProducts[i].id;
@@ -84,8 +92,8 @@ export class ShoppongCartComponent implements OnInit {
           this.getBasketProduct();
         });
       }
-      this.firstName = null;
-      this.secondName = null;
+      this.currentUser.firstName = null;
+      this.currentUser.secondName = null;
       this.address = null;
       this.confirmModalTrue = false;
       this.goHomeTrue = true;

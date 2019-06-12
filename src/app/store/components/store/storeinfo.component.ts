@@ -8,6 +8,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
 import { SuccessLoadProduct, StartLoadProduct, FailedLoadProduct } from 'src/app/redux/Actions/product.actions';
 import { StartLoadBasketProduct, SuccessLoadBaskerProduct, FailedLoadBasketProduct } from 'src/app/redux/Actions/basket.product.actions';
+import { StartLoadBrands, SuccessLoadBrands, FailedLoadBrands } from 'src/app/redux/Actions/get.brands.action';
+import { StartLoadCategories, SuccessLoadCategories, FailedLoadCategories } from 'src/app/redux/Actions/get.categories.actions';
 
 @Component({
   selector: 'app-storeinfo',
@@ -32,10 +34,11 @@ export class StoreInfoComponent implements OnInit {
   countBasket: number;
   maxNumberPage: number;
   currentNumberPage: number;
+  loader = false;
   constructor(
     private productService: ProductService,
     private viewService: ViewService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
   ) {
     this.currentNumberPage = 1;
   }
@@ -43,7 +46,6 @@ export class StoreInfoComponent implements OnInit {
     this.getProducts();
     this.getCategories();
     this.getBrands();
-    this.getBasketProduct();
   }
   public clickOnCategory(category: string): void {
     this.currentNumberPage = 1;
@@ -81,7 +83,6 @@ export class StoreInfoComponent implements OnInit {
       () => this.getBasketProduct(),
     );
   }
-  // tslint:disable-next-line:use-life-cycle-interface
   public onFilter = (value) => {
     this.filteredProduct = this.products.filter(({ name }) =>
       name.toLowerCase().includes(value.toLowerCase())
@@ -92,8 +93,14 @@ export class StoreInfoComponent implements OnInit {
     this.store.dispatch(new StartLoadProduct());
     this.productService.getJsonProduct().subscribe(
       data => {
+        // this.products = data;
         this.store.dispatch(new SuccessLoadProduct(data));
-        this.store.select('productPage').subscribe(d => this.products = d.products);
+        this.store.select('productPage').subscribe(d => {
+          this.products = d.products;
+          this.loader = d.loading;
+          this.filteredProduct = d.products;
+          console.log(d);
+        });
       },
       err => {
         this.store.dispatch(new FailedLoadProduct(err));
@@ -102,12 +109,18 @@ export class StoreInfoComponent implements OnInit {
   }
 
   public getCategories(): void {
+    this.store.dispatch(new StartLoadCategories());
     this.productService.getJsonCategory().subscribe(
       data => {
-        this.categories = data;
+        this.store.dispatch(new SuccessLoadCategories(data));
+        this.store.select('getCategoriesPage').subscribe(d => {
+          this.categories = d.categories;
+          this.loader = d.loading;
+        });
+
       },
       err => {
-        console.log(err);
+        this.store.dispatch(new FailedLoadCategories(err));
       }
     );
   }
@@ -116,7 +129,11 @@ export class StoreInfoComponent implements OnInit {
     this.productService.getBasketProduct().subscribe(
       data => {
         this.store.dispatch(new SuccessLoadBaskerProduct(data));
-        this.store.select('basketProductPage').subscribe(d => this.basketProduct = d.basketProduct);
+        this.store.select('basketProductPage').subscribe(d => {
+          this.basketProduct = d.basketProduct;
+          this.loader = d.loading;
+        });
+        console.log(this.basketProduct);
       },
       err => {
         this.store.dispatch(new FailedLoadBasketProduct(err));
@@ -124,12 +141,14 @@ export class StoreInfoComponent implements OnInit {
     );
   }
   public getBrands(): void {
+    this.store.dispatch(new StartLoadBrands());
     this.productService.getJsonBrands().subscribe(
       data => {
-        this.brands = data;
+        this.store.dispatch(new SuccessLoadBrands(data));
+        this.store.select('getBrandsPage').subscribe(d => this.brands = d.brands);
       },
       err => {
-        console.log(err);
+        this.store.dispatch(new FailedLoadBrands(err));
       }
     );
   }

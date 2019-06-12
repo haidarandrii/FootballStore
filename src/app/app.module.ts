@@ -13,6 +13,13 @@ import { HeaderComponent } from './header/header.component';
 import { registerReducer } from './redux/Reducers/register.reducer';
 import { productReducer } from './redux/Reducers/product.reducer';
 import { basketProductReducer } from './redux/Reducers/basket.product.reducer';
+import { deleteBasketProductReducer } from './redux/Reducers/delete.basket.product.reducer';
+import { getBrandsReducer } from './redux/Reducers/get.brands.reducer';
+import { getCategoriesReducer } from './redux/Reducers/get.categories.reducer';
+import { DateInputsModule, CalendarModule } from '@progress/kendo-angular-dateinputs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 
 
 @NgModule({
@@ -28,7 +35,15 @@ import { basketProductReducer } from './redux/Reducers/basket.product.reducer';
     PublicModule,
     StoreeModule,
     AdminModule,
-    StoreModule.forRoot({registerPage: registerReducer, productPage: productReducer, basketProductPage: basketProductReducer})
+    StoreModule.forRoot({registerPage: registerReducer,
+      productPage: productReducer,
+      basketProductPage: basketProductReducer,
+      deleteBasketProductPage: deleteBasketProductReducer,
+      getBrandsPage: getBrandsReducer,
+      getCategoriesPage: getCategoriesReducer}),
+    DateInputsModule,
+    BrowserAnimationsModule,
+    CalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

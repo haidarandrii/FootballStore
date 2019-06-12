@@ -1,11 +1,16 @@
 import { IUser } from '../shared/interfaces/user';
 import { Action } from '@ngrx/store';
 import { IProduct } from '../shared/interfaces/product';
+import { IBrand } from '../store/shared/interface/IBrand';
+import { ICategory } from '../store/shared/interface/ICategory';
 
 export interface AppState {
     registerPage: IRegisterState;
     productPage: IProductState;
     basketProductPage: IBasketProduct;
+    deleteBasketProductPage: IDeleteBasketProduct;
+    getBrandsPage: IGetBrandsState;
+    getCategoriesPage: IGetCategories;
 }
 export interface ActionWithPayload extends Action {
     payload?: any;
@@ -25,4 +30,17 @@ export interface IBasketProduct {
     error: string;
     loading: boolean;
     basketProduct: Array<IProduct>;
+}
+export interface IDeleteBasketProduct {
+    loading: boolean;
+}
+export interface IGetBrandsState {
+    error: string;
+    loading: boolean;
+    brands?: Array<IBrand>;
+}
+export interface IGetCategories {
+    error: string;
+    loading: boolean;
+    categories?: Array<ICategory>;
 }

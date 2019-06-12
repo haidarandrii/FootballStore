@@ -20,7 +20,6 @@ export class StoreComponent implements OnInit {
   onWindowScroll() {
     this.scroll = window.scrollY;
   }
-   // tslint:disable-next-line:use-life-cycle-interface
   @HostListener('click', ['$event.target'])
   onClick(btn) {
     this.getBasketProducts();

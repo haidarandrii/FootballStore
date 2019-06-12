@@ -4,7 +4,7 @@ import { ACTIONS } from '../Actions/basket.product.actions';
 const initialState: IBasketProduct = {
     loading: false,
     error: null,
-    basketProduct: undefined
+    basketProduct: null
 };
 
 export function basketProductReducer(state = initialState, action: ActionWithPayload) {
@@ -26,5 +26,7 @@ export function basketProductReducer(state = initialState, action: ActionWithPay
                 loading: false,
                 basketProduct: action.payload
             };
+        default:
+            return state;
     }
 }

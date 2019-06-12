@@ -52,6 +52,9 @@ export class ViewComponent implements OnInit {
     );
   }
   public existInBasket(): boolean {
+    if (!this.viewProduct) {
+      return false;
+    }
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.basketProduct.length; i++) {
       if (this.viewProduct.id === this.basketProduct[i].id) {

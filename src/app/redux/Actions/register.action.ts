@@ -10,6 +10,7 @@ export namespace ACTIONS {
 }
 export class StartProccess implements ActionWithPayload {
     readonly type = ACTIONS.START_PROCCESS;
+    constructor() {}
 }
 export class SingUp implements ActionWithPayload {
     readonly type = ACTIONS.SING_UP;
