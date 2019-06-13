@@ -1,0 +1,21 @@
+<main>
+  <div class="centr">
+    <p>New brand:</p>
+    <input type="text" class="col-6" [(ngModel)]="brand" placeholder="new brand">
+    <button class="btn btn-success col-6" (click)="addBrand()">ADD</button>
+  </div>
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th>#</th>
+        <th>Brand</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let brand of brands; let i = index;">
+        <td>{{ i+1 }}</td>
+        <td>{{ brand.name }}</td>
+      </tr>
+    </tbody>
+  </table>
+</main>

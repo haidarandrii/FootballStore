@@ -1,0 +1,58 @@
+<div *ngIf="loader" class="loader">
+  <p>Loading....</p>
+</div>
+<div class="empty" *ngIf="myProducts.length === 0">
+  <p><i class="fas fa-meh-rolling-eyes"></i></p>
+  <p>Your basket is empty!</p>
+  <button class="btn btn-success" routerLink="/store">Go to shopping</button>
+</div>
+<main *ngIf="myProducts.length > 0">
+  <div class="title">Basket</div>
+  <p class="count">{{myProducts.length}} products</p>
+  <div class="flex">
+    <li>
+      <p>First Name</p><input type="text" placeholder="first name" [(ngModel)]="firstName">
+    </li>
+    <li>
+      <p>Second Name</p><input type="text" placeholder="second name" [(ngModel)]="secondName">
+    </li>
+    <li>
+      <p>Address</p><input type="text" placeholder="address" [(ngModel)]="address">
+    </li>
+  </div>
+  <div class="products">
+    <div class="product" *ngFor="let product of myProducts">
+      <img [src]="product.image" width="150" height="150" [alt]="product.name">
+      <p>{{product.name}}</p>
+      <p>{{product.brands}}</p>
+      <p>{{product.price | currency}}</p>
+      <button class="btn btn-danger" (click)="delProductBasket(product)">DELETE</button>
+    </div>
+  </div>
+  <div class="but">
+    <button class="btn btn-warning col-3">Full price: {{ fullPrice() }} $</button>
+    <button class="btn btn-success col-3" (click)="modalSuccesTrue()" >Confirm</button>
+  </div>
+  <div class="modal" *ngIf="modalTrue" (click)="clickModal()">
+      <div class="window" (click)="$event.stopPropagation()">
+        <p>Opsss....<i class="fas fa-hand-paper"></i></p>
+        <p>You must fill all field!</p>
+        <button class="btn btn-success" (click)="clickModal()">Okay!</button>
+      </div>
+  </div>
+  
+</main>
+<div class="modal" *ngIf="modalSuccess">
+    <div class="successModalWindow" [ngClass]="{'yellow': confirmModalTrue, 'green' : !confirmModalTrue}">
+      <div class="confirm" *ngIf="confirmModalTrue">
+      <p>Do you want confirm order?</p>
+      <button class="btn btn-warning" (click)="modalSuccessFalse()">No</button>
+      <button class="btn btn-success" (click)="confirm()">Confirm order</button>
+    </div>
+    <div class="goHome" *ngIf="goHomeTrue">
+      <p><i class="fas fa-hands-helping"></i></p>
+      <p>Done</p>
+      <button class="btn btn-primary" routerLink="/">Go home</button>
+    </div>
+    </div>
+  </div>

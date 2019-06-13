@@ -1,0 +1,31 @@
+.adminPanel {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 9999;
+    width: 150px;
+    height: 40px;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    opacity: 0.8;
+}
+.adminPanel:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+    transition-duration: 0.3s;
+}
+routing-outlet {
+    animation-name: rout;
+    animation-duration: 1s;
+}
+@keyframes rout {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}

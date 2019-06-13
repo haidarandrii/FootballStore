@@ -515,31 +515,13 @@
   ],
   "basketProducts": [
     {
-      "id": 30,
-      "name": "Joma boots",
-      "price": 90,
-      "category": "boots",
-      "image": "https://www.futbolemotion.com/imagesarticulos/116257/grandes/bota-joma-champion-ag-blue-0.jpg",
-      "brands": "joma",
-      "descriptions": "Buy please me"
-    },
-    {
-      "id": 8,
-      "name": "CR7",
-      "price": 120,
-      "category": "boots",
-      "image": "https://shop.playerscout.co.uk/wp-content/uploads/2018/04/Nike-Mercurial-Superfly-360-Elite-CR7-Firm-Ground-Football-Boot-Green-1.png",
-      "brands": "nike",
-      "descriptions": "lorem lorem lorem"
-    },
-    {
-      "id": 38,
-      "name": "Chelsea T-Shirt",
-      "price": 40,
+      "id": 3,
+      "name": "Liverpool t-shirt",
+      "price": 30,
       "category": "t-shirt",
-      "image": "https://images.nike.com/is/image/DotCom/THN_PS/919009_496/2018-19-chelsea-fc-stadium-home-football-shirt.jpg?hei=620&wid=620&fmt=png",
-      "brands": "nike",
-      "descriptions": "lorem lorem lorem"
+      "image": "https://i2.wp.com/tshirtfc.store/wp-content/uploads/2018/02/liverpool.png?fit=300%2C300&ssl=1",
+      "brands": "newBalance",
+      "descriptions": "Lorem ipsum dolor sit amet consectetur adipisicing elit"
     }
   ],
   "adminOrder": [
@@ -1718,52 +1700,28 @@
   ],
   "users": [
     {
-      "firstName": "aaaa",
-      "secondName": "aaaa",
-      "dateOfBirth": "1993-12-31",
-      "email": "aaaa",
-      "password": "aaaa",
+      "firstName": "Alisonlok",
+      "secondName": "Jacksonio",
+      "dateOfBirth": "2019-06-23T21:00:00.000Z",
+      "email": "haiandriy@gmail.com",
+      "password": "123456",
       "id": 1
     },
     {
-      "firstName": "Андрій",
-      "secondName": "Гайдар",
-      "dateOfBirth": "2019-06-21",
-      "email": "haidarandrii@gmail.com",
-      "password": "1234567A",
+      "firstName": "gdfsdgfq",
+      "secondName": "fdgds",
+      "dateOfBirth": "2019-06-25T21:00:00.000Z",
+      "email": "haigandriy@gmail.com",
+      "password": "111111",
       "id": 2
     },
     {
-      "firstName": "Fffffff",
-      "secondName": "Ffffff",
-      "dateOfBirth": "2000-03-09T22:00:00.000Z",
-      "email": "aaaaaaaa@gmail.com",
-      "password": "1234567A",
+      "firstName": "Alisonlok",
+      "secondName": "Jacksonio",
+      "dateOfBirth": "2019-06-02T21:00:00.000Z",
+      "email": "haiandffriy@gmail.com",
+      "password": "111111",
       "id": 3
-    },
-    {
-      "firstName": "aaaa",
-      "secondName": "aaaa",
-      "dateOfBirth": "2000-01-31T22:00:00.000Z",
-      "email": "qwertyu@gmail.com",
-      "password": "1234567A",
-      "id": 4
-    },
-    {
-      "firstName": "aaaa",
-      "secondName": "aaaa",
-      "dateOfBirth": "2000-01-31T22:00:00.000Z",
-      "email": "qwerty@gmail.com",
-      "password": "qwerty123",
-      "id": 5
-    },
-    {
-      "firstName": "Т",
-      "secondName": "Т",
-      "dateOfBirth": "2000-02-01T22:00:00.000Z",
-      "email": "qwerty@gmail.com",
-      "password": "1234567A",
-      "id": 6
     }
   ]
 }

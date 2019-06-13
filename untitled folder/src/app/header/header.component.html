@@ -1,0 +1,153 @@
+<div *ngIf="loader" class="loader">
+  <p>Loading....</p>
+</div>
+<section>
+    <div class="menu" (click)="showMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+<div *ngIf="!trueMenuMedia">
+  <p class="nameCompany">Football Store</p>
+  <p class="exclusiveDesign">Exclusive designs</p>
+  <p class="extraordinaryCollections">Extraordinary Collections</p>
+</div>
+  <div class="mediaMenu" *ngIf="trueMenuMedia" >
+      <p routerLink="/">home</p>
+      <p routerLink="/store">store</p>
+      <p routerLink="/about-us">about</p>
+      <p routerLink="/contact">contact</p>
+      <p routerLink="/store/shopping-cart">basket</p>
+  </div>
+</section>
+<header>
+  <div class="fixMenu" *ngIf="scroll >= 100">
+    <div class="title">Football Store</div>
+    <nav>
+      <p routerLink="/">Home</p>
+      <p routerLink="/store">store</p>
+      <p routerLink="/about-us">about</p>
+      <p routerLink="/contact">contact</p>
+      <p routerLink="/store/shopping-cart"><i class="fas fa-shopping-cart" *ngIf="getCounter()">{{count}}</i></p>
+    </nav>
+  </div>
+  <div class="menuFull">
+    <div>Football Store</div>
+    <nav>
+      <p routerLink="/">Home</p>
+      <p routerLink="/store">store</p>
+      <p routerLink="/about-us">about</p>
+      <p routerLink="/contact">contact</p>
+      <p routerLink="/store/shopping-cart"><i class="fas fa-shopping-cart"></i></p>
+    </nav>
+  </div>
+  <div class="dercribe">
+    <p class="nameCompany">Football Store</p>
+    <p class="exclusiveDesign">Exclusive designs</p>
+    <p class="extraordinaryCollections">Extraordinary Collections</p>
+  </div>
+  <div class="buttonsReg" *ngIf="!onLogin">
+    <div class="singIn" (click)="singInTrue()">Sing In<i class="fas fa-user-edit"></i></div>
+    <div class="singIn regestration" (click)="ifRegistrationTrue()">Regestration<i class="fas fa-user-plus"></i></div>
+  </div>
+  <div class="dataUser" *ngIf="onLogin">
+    <div class="pic" routerLink="/cabinet"><i class="fas fa-user-tie"></i></div>
+    <p>{{currentUser?.firstName}} {{currentUser?.secondName}}</p>
+    <p>{{currentUser?.email}}</p>
+  </div>
+  </header>
+  <form class="registration" *ngIf="ifRegistration" name="formSingUp" >
+    <div class="btn btn-danger closed" (click)="close()">x</div>
+    <div class="title">Registration</div>
+    <div class="form-group row">
+        <label for="inputFirstName" class="col-sm-2 col-form-label">First Name <span class="text-danger">*</span></label>
+        <div class="col-sm-10 pass">
+          <input type="text" [ngClass]="{'valid': fName.valid && fName.touched, 'invalid': !fName.valid && fName.touched}" class="form-control" id="inputFirstName" 
+          placeholder="First Name" [(ngModel)]="firstName" name="fName"
+          #fName="ngModel" required minlength="2" maxlength="15" >
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputSecondName" class="col-sm-2 col-form-label">Second Name <span class="text-danger">*</span></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="inputSecondName" 
+          placeholder="Second Name" [(ngModel)]="secondName" name="sName" required
+          #sName="ngModel" minlength="2" maxlength="15"
+          [ngClass]="{'valid': sName.valid && sName.touched, 'invalid': !sName.valid && sName.touched}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputDateOfBirth" class="col-sm-2 col-form-label">Date of birth</label>
+        <div class="col-sm-10">
+          <kendo-datepicker name="kendo"
+          [(ngModel)]="dateOfBirth"
+      ></kendo-datepicker>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputEmail" class="col-sm-2 col-form-label">Email <span class="text-danger">*</span></label>
+        <div class="col-sm-10">
+          <input type="email" class="form-control" 
+          id="inputEmail" placeholder="Email" 
+          [(ngModel)]="email" name="emailSingUp"
+          required pattern="[a-zA-Z_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}"
+          #emailSingUp="ngModel"
+          [ngClass]="{'valid': emailSingUp.valid && emailSingUp.touched, 'invalid': !emailSingUp.valid && emailSingUp.touched}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Password <span class="text-danger">*</span></label>
+        <div class="col-sm-10 pass">
+          <input type="password" class="form-control" id="inputPassword" placeholder="Password" 
+          [(ngModel)]="password" name="pass" required #pass="ngModel" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+          [ngClass]="{'valid': pass.valid && pass.touched, 'invalid': !pass.valid && pass.touched}">
+          <p (click)="showPassword()"><i class="fas fa-eye"></i></p>
+        </div>
+        <div [hidden]="pass.valid || pass.untouched" class="alert alert-danger">
+          Minimum eight characters, at least one letter and one number
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputPasswordRepeat" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10 pass">
+          <input type="password" class="form-control" id="inputPasswordRepeat" placeholder="Password repeat" 
+          [(ngModel)]="passwordRepeat" name="passRepeat" #passRepeat="ngModel"
+          [ngClass]="{'valid': password === passwordRepeat && passRepeat.touched , 'invalid': !password === passwordRepeat && passRepeat.touched
+          || passRepeat.touched}">
+          <p (click)="showPassword()"><i class="fas fa-eye"></i></p>
+        </div>
+        <div [hidden]="password === passwordRepeat || passRepeat.untouched || pass.invalid" class="alert alert-danger">
+          Passwords don't match
+        </div>
+        <button class="btn btn-success" [disabled]="sName.invalid || pass.invalid || 
+        password !== passwordRepeat || emailSingUp.invalid || fName.invalid" (click)="newUser()">Regestration</button>
+      </div>
+  </form>
+    <form class="registration" *ngIf="singIn">
+      <div class="btn btn-danger closed" (click)="close()">x</div>
+        <div class="title">Sing In</div>
+      <div class="form-group row">
+          <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="inputEmail"
+            placeholder="Email" [(ngModel)]="singInEmail" name="email"
+            #email="ngModel" required pattern="[a-zA-Z_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}">
+          </div>
+          <div [hidden]="!failEmail" class="alert alert-danger">
+            Your email is wrong
+          </div>
+      </div>
+      <div class="form-group row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+          <div class="col-sm-10 pass">
+            <input type="password" class="form-control" id="inputPassword" 
+          placeholder="Password" [(ngModel)]="singInPassword" name="password">
+            <p (click)="showPassword()"><i class="fas fa-eye"></i></p>
+          </div>
+          <p class="alert alert-danger" *ngIf="wrongPassword">Check your data!</p>
+          <button class="btn btn-success" [disabled]="email.invalid" (click)="checkUser()">Sing In</button>
+        </div>
+    </form>
+  
+
+

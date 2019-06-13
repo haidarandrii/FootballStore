@@ -1,0 +1,68 @@
+<main>
+  <div class="addProduct">
+    <div class="flex">
+      <p>Name</p>
+      <div>
+        <input type="text" [(ngModel)]="name" placeholder="type here name" required>
+      </div>
+    </div>
+    <div class="flex">
+      <p>Category</p>
+      <div>
+        <input type="text" [(ngModel)]="category" placeholder="type here Category" required>
+      </div>
+    </div>
+    <div class="flex">
+      <p>Brand</p>
+      <div>
+        <input type="text" [(ngModel)]="brand" placeholder="type here Brand" required>
+      </div>
+    </div>
+    <div class="flex">
+      <p>Image(URL)</p>
+      <div>
+        <input type="text" [(ngModel)]="image" placeholder="type here ulr " required>
+      </div>
+    </div>
+    <div class="flex">
+      <p>Price</p>
+      <div>
+        <input type="number" [(ngModel)]="price" placeholder="type here price" required>
+      </div>
+    </div>
+    <div class="flex">
+      <p>Description</p>
+      <textarea name="" id="" cols="80" rows="3" [(ngModel)]="description" placeholder="type here description"
+        required></textarea>
+    </div>
+    <button *ngIf="!updateTrue" type="button" class="btn btn-success col-12" (click)="addProduct()">ADD</button>
+    <button *ngIf="updateTrue" type="button" class="btn btn-warning col-12" (click)="saveJsonProduct()">UPDATE</button>
+  </div>
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Category</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Description</th>
+        <th scope="col">Brands</th>
+        <th scope="col">EDIT</th>
+        <th scope="col">DELETE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products" ng-change="getProduct()">
+        <td>{{ product.id }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.descriptions }}</td>
+        <td>{{ product.brands }}</td>
+        <td><button class="btn btn-warning" (click)="showEdit(product)">EDIT</button></td>
+        <td><button class="btn btn-danger" (click)="isDeleteProduct(product)">DELETE</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+</main>

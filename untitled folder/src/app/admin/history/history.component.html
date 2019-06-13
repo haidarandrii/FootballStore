@@ -1,0 +1,30 @@
+<main>
+    <div class="title">HISTORY ORDERS</div>
+    <div *ngFor="let order of orders | orderStatus: 'delivered'; let i = index ">
+      <p class="number">Order # {{i+1}}</p>
+    <table class="table table-active">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of order.products; let i = index;">
+          <td>{{product.id}}</td>
+          <td>{{product.name}}</td>
+          <td>{{product.category}}</td>
+          <td>{{product.price}}</td>
+        </tr>
+        <tr>
+          <td>{{order.firstName}}</td>
+          <td>{{order.secondName}}</td>
+          <td>{{order.address}}</td>
+          <td class="text-success">{{order.status}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </main>

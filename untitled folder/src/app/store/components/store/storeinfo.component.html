@@ -1,0 +1,90 @@
+<div *ngIf="loader" class="loader">
+    <p>Loading....</p>
+  </div>
+<main>
+    <section>
+        <p class="title">Categories</p>
+        <div class="flexCategories">
+            <div *ngFor="let category of categories" class="all" 
+            [ngStyle]="{'background-image': 'url(' + category.img + ')'}"
+            (click)="clickOnCategory(category.name)">
+                <div class="grayFon">
+                    <p class="text">{{category.name}}</p>
+                    <div class="buttonMore">MORE HERE</div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </section>
+
+    <div class="title" id="title">Football Store</div>
+    <div class="centr">
+        <div class="search" *ngIf="!showSearch" (click)="clickSearch()">search<i class="fas fa-search"></i></div>
+        <div class="searchField"  *ngIf="showSearch" >
+            <input placeholder="type here name of goods" type="text" class="col-7"
+                [(ngModel)]="filter" (ngModelChange)="onFilter($event)">
+        </div>
+    </div>
+    <div class="flex">
+
+        <div class="filters">
+            <h3>Filters:</h3>
+            <br>
+            <div>
+                <h4>Price filter</h4>
+                <div class="select">
+                    <select [(ngModel)]="selectValue" name="money">
+                        <option value="GRN">Ukranian hryvnias</option>
+                        <option value="EUR">EURO</option>
+                        <option value="DOLLAR">Dollars</option>
+                        <option value="GBP">GBP</option>
+                    </select>
+                </div>
+            </div>
+            <div *ngIf="hideCategoryFilter">
+                <h4>Category:</h4>
+                <p *ngFor="let category of categories; let i = index">
+                    <input type="checkbox" [id]="i + 'category'" name="category" value="category">
+                    <label [for]="i + 'category'" (click)="filterCheckboxCategory(category)">{{category.name}}</label>
+                </p>
+            </div>
+            <div>
+                <h4>Brands:</h4>
+                <p *ngFor="let brand of brands; let i = index;">
+                    <input type="checkbox" [id]="i + 'brands' " name="brand" value="brand">
+                    <label [for]="i + 'brands'" (click)="filterCheckboxBrands(brand.name)">{{ brand.name }}</label>
+                </p>
+            </div>
+        </div>
+
+        <div class="products">
+            <div class="flexProducts">
+            <div class="product" *ngFor="let product of filteredProduct | categoryImage: imageCategory | checkboxCat: arrayCategory:arrayBrands | pagination: currentNumberPage">
+                <div class="hover">
+                    <img [src]="product?.image" [alt]="product?.name" width="150" height="150">
+                    <div class="describe">
+                        <p routerLink="/store/{{product?.id}}">View</p>
+                    </div>
+                </div>
+                <p class="name">{{ product?.name }}</p>
+                <div class="flex">
+                    <p class="price">{{ product?.price | number:'2.2-2' | money: selectValue }}</p>
+                    <p><i class="fas fa-money-bill-wave"></i></p>
+                </div>
+                <button class="toBasket" [disabled]="existInBasket(product)" (click)="addToBasket(product)">{{existInBasket(product) ? 'In' : 'To'}} basket</button>                
+            </div>
+        </div>
+            <div class="pagination" *ngIf="maxNumPage() > 1">
+                <div class="pagintaionButton first" (click)="first()" *ngIf="currentNumberPage != 1">FIRST</div>
+                <div class="pagintaionButton" (click)="previous()" *ngIf="currentNumberPage >= 2">PREVIOUS</div>
+                <div class="threePoints" *ngIf="currentNumberPage - 2 > 0">...</div>
+                <div class="pagintaionButton" (click)="previous()" *ngIf="currentNumberPage - 1 != 0">{{currentNumberPage - 1}}</div>
+                <div class="pagintaionButton current">{{currentNumberPage}}</div>
+                <div class="pagintaionButton" (click)="next()" *ngIf="maxNumPage() >= currentNumberPage +1">{{currentNumberPage + 1}}</div>
+                <div class="threePoints" *ngIf="maxNumPage() >= currentNumberPage + 2">...</div>
+                <div class="pagintaionButton" (click)="next()" *ngIf="maxNumPage() != currentNumberPage">NEXT</div>
+                <div class="pagintaionButton" (click)="last()" *ngIf="maxNumPage() != currentNumberPage">LAST</div>
+            </div>
+        </div>
+    </div>
+</main>

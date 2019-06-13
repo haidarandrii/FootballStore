@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../shared/services/product.service';
 import { IProduct } from '../shared/interfaces/product';
 import { UserService } from '../shared/services/user.service';
@@ -7,6 +8,7 @@ import { IUser } from '../shared/interfaces/user';
 import { Store } from '@ngrx/store';
 import { AppState } from '../redux/app.state';
 import { SingUp, Failed, SingIn, StartProccess } from '../redux/Actions/register.action';
+import { FormValidator } from '../store/shared/validator';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +16,35 @@ import { SingUp, Failed, SingIn, StartProccess } from '../redux/Actions/register
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  registerForm = new FormGroup ({
+    firstName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.pattern('[a-zA-Z ]*')
+    ]),
+    secondName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.pattern('[a-zA-Z ]*')
+    ]),
+    dateOfBirth: new FormControl('', [
+      Validators.required
+    ]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern('[a-zA-Z_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}')
+    ]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6)
+    ]),
+    passwordRepeat: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ])
+  }, {
+      validator: FormValidator.matchingPasswords
+  });
   count: number;
   myProducts: Array<IProduct> = [];
   trueMenuMedia = false;
@@ -23,12 +54,6 @@ export class HeaderComponent implements OnInit {
   failEmail = false;
   // REGESTRATION
   loader = false;
-  firstName: string;
-  secondName: string;
-  dateOfBirth: Date = new Date(2000, 1, 1);
-  email: string;
-  password: string;
-  passwordRepeat: string;
   allUsers: Array<IUser>;
   wrongPassword = false;
   singInEmail: string;
@@ -70,6 +95,7 @@ export class HeaderComponent implements OnInit {
     this.productService.getBasketProduct().subscribe(
       data => {
         this.myProducts = data;
+        console.log(this.registerForm);
       },
       err => {
         console.log(err);
@@ -80,7 +106,7 @@ export class HeaderComponent implements OnInit {
     this.ifRegistration = false;
     this.singIn = !this.singIn;
     this.wrongPassword = false;
-    this.email = null;
+    this.registerForm.value.email = '';
   }
   public ifRegistrationTrue(): void {
     this.singIn = false;
@@ -94,12 +120,6 @@ export class HeaderComponent implements OnInit {
     this.ifRegistration = false;
     this.singInEmail = null;
     this.singInPassword = null;
-    this.passwordRepeat = null;
-    this.firstName = null;
-    this.secondName = null;
-    this.password = null;
-    this.email = null;
-    this.dateOfBirth = null;
   }
   public showPassword(): void {
     const input = document.getElementsByTagName('input');
@@ -126,28 +146,14 @@ export class HeaderComponent implements OnInit {
   }
   public newUser(): void {
     this.store.dispatch(new StartProccess());
-    const existEmail = this.allUsers.some(user => user.email === this.email);
+    const existEmail = this.allUsers.some(user => user.email === this.registerForm.value.email);
     if (existEmail) {
       return alert('This email has already used');
     }
-    if (this.password === this.passwordRepeat) {
-      this.firstName = this.firstName.toLowerCase();
-      this.secondName = this.secondName.toLowerCase();
-
+    if (this.registerForm.value.password === this.registerForm.value.passwordRepeat) {
       this.ifRegistration = false;
       this.singIn = true;
-      const user: IUser = new User(
-      this.firstName,
-      this.secondName,
-      this.dateOfBirth,
-      this.email,
-      this.password);
-      this.passwordRepeat = null;
-      this.firstName = null;
-      this.secondName = null;
-      this.password = null;
-      this.email = null;
-      this.dateOfBirth = null;
+      const user: IUser = new User(this.registerForm.value);
       this.wrongPassword = false;
       this.userSevice.addUser(user).subscribe(() => {
         this.getUser();
@@ -156,7 +162,6 @@ export class HeaderComponent implements OnInit {
     } else {
       this.wrongPassword = true;
       this.store.dispatch(new Failed({error: 'Your data is wrong'}));
-      console.log(this.store);
     }
   }
   public getUser(): void {
@@ -174,12 +179,15 @@ export class HeaderComponent implements OnInit {
     const existEmail = this.allUsers.some(user => user.email === this.singInEmail);
     if (!existEmail) {
       this.failEmail = true;
+    } else {
+      this.failEmail = false;
     }
     this.store.select('registerPage').subscribe( d => console.log(d.loading));
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.allUsers.length; i++) {
       if (this.singInEmail === this.allUsers[i].email && this.singInPassword === this.allUsers[i].password) {
         this.onLogin = true;
+        this.failEmail = false;
         this.singIn = false;
         this.currentUser = this.allUsers[i];
         // this.userSevice.currentUser = this.currentUser;
@@ -194,5 +202,13 @@ export class HeaderComponent implements OnInit {
         this.wrongPassword = true;
       }
     }
+  }
+  public showErrorWrongPassword(): boolean {
+    if (this.registerForm.value.password === this.registerForm.value.passwordRepeat ||
+      this.registerForm.controls.passwordRepeat.untouched ||
+      this.registerForm.controls.password.invalid) {
+        return true;
+      }
+    return false;
   }
 }

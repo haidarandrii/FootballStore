@@ -9,10 +9,10 @@ export class User implements IUser {
     dateOfBirth: Data;
     email: string;
     password: string;
-    id?:number;
+    id?: number;
     orders?: Array<IOrder>;
     basket?: Array<IProduct>;
-    constructor (firstName, secondName, dateOfBirth, email, password){
+    constructor({ firstName, secondName, dateOfBirth, email, password }) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.dateOfBirth = dateOfBirth;
