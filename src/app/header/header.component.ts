@@ -41,9 +41,8 @@ export class HeaderComponent implements OnInit {
     passwordRepeat: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
+      FormValidator.matchingPasswords(this, 'registerForm'),
     ])
-  }, {
-      validator: FormValidator.matchingPasswords
   });
   count: number;
   myProducts: Array<IProduct> = [];
@@ -203,12 +202,11 @@ export class HeaderComponent implements OnInit {
       }
     }
   }
-  public showErrorWrongPassword(): boolean {
-    if (this.registerForm.value.password === this.registerForm.value.passwordRepeat ||
-      this.registerForm.controls.passwordRepeat.untouched ||
-      this.registerForm.controls.password.invalid) {
-        return true;
-      }
-    return false;
+  public hideErrorWrongPassword(): boolean {
+    const { errors, controls } = this.registerForm;
+    if (controls.passwordRepeat.untouched) {
+      return true;
+    }
+    return !(errors && errors.mismatchedPasswords);
   }
 }

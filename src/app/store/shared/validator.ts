@@ -1,11 +1,12 @@
-import { AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
-export type ValidatorFn = (c: AbstractControl) => ValidationErrors|null;
+import { FormControl } from '@angular/forms';
 
 export class FormValidator {
-    static matchingPasswords(c: AbstractControl): {[key: string]: any} {
-        const password = c.get(['passwords']);
-        const confirmPassword = c.get(['confirmpwd']);
-        if (password.value !== confirmPassword.value) {
+    static matchingPasswords = (component, formName) => (c: FormControl): {[key: string]: any} => {
+        if (!component[formName]) {
+            return null;
+        }
+        const { password } = component[formName].controls;
+        if (password.value !== c.value) {
             return { mismatchedPasswords: true };
         }
         return null;
