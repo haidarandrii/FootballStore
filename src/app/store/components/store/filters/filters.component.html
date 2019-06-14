@@ -1,0 +1,31 @@
+<div class="flex">
+  <div class="filters">
+      <h3>Filters:</h3>
+      <br>
+      <div>
+          <h4>Price filter</h4>
+          <div class="select">
+              <select [(ngModel)]="selectValue" (change)="changePriceFilter()" name="money">
+                  <option value="GRN">Ukranian hryvnias</option>
+                  <option value="EUR">EURO</option>
+                  <option value="DOLLAR">Dollars</option>
+                  <option value="GBP">GBP</option>
+              </select>
+          </div>
+      </div>
+      <div *ngIf="hideCategoryFilter">
+        <h4>Category:</h4>
+        <p *ngFor="let category of categories; let i = index">
+          <input type="checkbox" [id]="i + 'category'" name="category" value="category">
+          <label [for]="i + 'category'" (click)="filterCheckboxCategory(category)">{{category.name}}</label>
+        </p>
+      </div>
+      <div>
+        <h4>Brands:</h4>
+        <p *ngFor="let brand of brands; let i = index;">
+          <input type="checkbox" [id]="i + 'brands' " name="brand" value="brand">
+          <label [for]="i + 'brands'" (click)="filterCheckboxBrands(brand.name)">{{ brand.name }}</label>
+        </p>
+      </div>
+  </div>
+</div>

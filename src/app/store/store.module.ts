@@ -12,6 +12,12 @@ import { ViewComponent } from './components/view/view.component';
 import { CheckboxCatPipe } from './shared/pipes/checkbox-cat.pipe';
 import { CategoryImagePipe } from './shared/pipes/category-image.pipe';
 import { PaginationPipe } from './shared/pipes/pagination.pipe';
+import { CategoriesComponent } from './components/store/categories/categories.component';
+import { ProductsComponent } from './components/store/products/products.component';
+import { FiltersComponent } from './components/store/filters/filters.component';
+import { SearchFilterComponent } from './components/store/search-filter/search-filter.component';
+import { FormaShoppingCartComponent } from './components/shoppong-cart/forma-shopping-cart/forma-shopping-cart.component';
+import { GoodsComponent } from './components/shoppong-cart/goods/goods.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +30,12 @@ import { PaginationPipe } from './shared/pipes/pagination.pipe';
     CheckboxCatPipe,
     CategoryImagePipe,
     PaginationPipe,
+    CategoriesComponent,
+    ProductsComponent,
+    FiltersComponent,
+    SearchFilterComponent,
+    FormaShoppingCartComponent,
+    GoodsComponent,
   ],
   imports: [
     CommonModule,

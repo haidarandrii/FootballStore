@@ -65,6 +65,9 @@ export class HeaderComponent implements OnInit {
     private store: Store<AppState>,
   ) {
     this.store.select('registerPage').subscribe(d => this.loader = d.loading);
+    this.store.select('registerPage').subscribe(d => {
+        this.currentUser = d.currentUser;
+    });
   }
   public scroll: number;
 
@@ -119,6 +122,8 @@ export class HeaderComponent implements OnInit {
     this.ifRegistration = false;
     this.singInEmail = null;
     this.singInPassword = null;
+    this.registerForm.reset();
+    this.failEmail = false;
   }
   public showPassword(): void {
     const input = document.getElementsByTagName('input');
@@ -147,21 +152,18 @@ export class HeaderComponent implements OnInit {
     this.store.dispatch(new StartProccess());
     const existEmail = this.allUsers.some(user => user.email === this.registerForm.value.email);
     if (existEmail) {
+      this.store.dispatch(new Failed(''));
       return alert('This email has already used');
     }
-    if (this.registerForm.value.password === this.registerForm.value.passwordRepeat) {
-      this.ifRegistration = false;
-      this.singIn = true;
-      const user: IUser = new User(this.registerForm.value);
-      this.wrongPassword = false;
-      this.userSevice.addUser(user).subscribe(() => {
+    this.ifRegistration = false;
+    this.singIn = true;
+    const newuUser: IUser = new User(this.registerForm.value);
+    this.wrongPassword = false;
+    this.registerForm.reset();
+    this.userSevice.addUser(newuUser).subscribe(() => {
         this.getUser();
         this.store.dispatch(new SingUp());
       });
-    } else {
-      this.wrongPassword = true;
-      this.store.dispatch(new Failed({error: 'Your data is wrong'}));
-    }
   }
   public getUser(): void {
     this.userSevice.getUser().subscribe(
@@ -188,10 +190,7 @@ export class HeaderComponent implements OnInit {
         this.onLogin = true;
         this.failEmail = false;
         this.singIn = false;
-        this.currentUser = this.allUsers[i];
-        // this.userSevice.currentUser = this.currentUser;
-        this.store.dispatch(new SingIn(this.currentUser));
-        this.store.select('registerPage').subscribe(d => console.log(d.currentUser));
+        this.store.dispatch(new SingIn(this.allUsers[i]));
         this.singInEmail = null;
         this.singInPassword = null;
         this.wrongPassword = false;

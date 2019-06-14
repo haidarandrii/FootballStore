@@ -1,0 +1,36 @@
+.flex {
+    width: 50%;
+    margin: 0 auto;
+}
+input[type=text] {
+    width: 100%;
+    padding: 5px;
+    height: 40px;
+}
+input[type=text] {
+    border: none;
+    border-bottom: 1px solid greenyellow;
+    transition: 0.5s;
+    &:focus {
+        transform: scale(1.1);
+    }
+}
+    // width: 100%;
+    // padding: 30px;
+li {
+    list-style-type: none;
+    margin-bottom: 10px;
+    width: 100%;
+    p{
+        font-size: 24px;
+    }
+}
+.count {
+    padding: 20px;
+    background-color: rgb(18, 156, 18);
+    width: 150px;
+    text-align: center;
+    border-radius: 40px;
+    color: white;
+    float: right;
+}

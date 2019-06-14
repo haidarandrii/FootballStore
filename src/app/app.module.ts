@@ -18,6 +18,10 @@ import { getBrandsReducer } from './redux/Reducers/get.brands.reducer';
 import { getCategoriesReducer } from './redux/Reducers/get.categories.reducer';
 import { DateInputsModule, CalendarModule } from '@progress/kendo-angular-dateinputs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { addCategoryReducer } from './redux/Reducers/filterCategory.reducer';
+import { addBasketReducer } from './redux/Reducers/basket.reducer';
+import { SingComponent } from './sing/sing.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 
 
@@ -26,7 +30,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [
     AppComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    SingComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +47,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       basketProductPage: basketProductReducer,
       deleteBasketProductPage: deleteBasketProductReducer,
       getBrandsPage: getBrandsReducer,
-      getCategoriesPage: getCategoriesReducer}),
+      getCategoriesPage: getCategoriesReducer,
+      filterCategoryPage: addCategoryReducer,
+      basketPage: addBasketReducer}),
     DateInputsModule,
     BrowserAnimationsModule,
     CalendarModule

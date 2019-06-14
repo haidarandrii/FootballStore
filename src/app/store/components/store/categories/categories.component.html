@@ -1,0 +1,14 @@
+<section>
+    <p class="title">Categories</p>
+    <div class="flexCategories">
+        <div *ngFor="let category of categories" class="all" 
+        [ngStyle]="{'background-image': 'url(' + category.img + ')'}"
+        (click)="clickOnCategory(category.name)">
+            <div class="grayFon">
+                <p class="text">{{category.name}}</p>
+                <div class="buttonMore">MORE HERE</div>
+            </div>
+        </div>
+    </div>
+    <br>
+</section>

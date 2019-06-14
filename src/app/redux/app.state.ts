@@ -11,6 +11,8 @@ export interface AppState {
     deleteBasketProductPage: IDeleteBasketProduct;
     getBrandsPage: IGetBrandsState;
     getCategoriesPage: IGetCategories;
+    filterCategoryPage: IFilterCategory;
+    basketPage;
 }
 export interface ActionWithPayload extends Action {
     payload?: any;
@@ -44,3 +46,11 @@ export interface IGetCategories {
     loading: boolean;
     categories?: Array<ICategory>;
 }
+export interface IFilterCategory {
+    categories: Array<string>;
+    brands: Array<string>;
+    imageCategory: string;
+    priceFilter: string;
+    valueInput: string;
+}
+

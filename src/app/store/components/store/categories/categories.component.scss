@@ -1,0 +1,73 @@
+.flexCategories {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        .all {
+            width: 350px;
+            height: 240px;
+            background-size: 100% 100%;
+            border-top: 10px solid green;
+            position: relative;
+            transition: 1s;
+            margin: 30px;
+            .grayFon {
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: rgba(71, 74, 81, 0.5);
+                width: 100%;
+                height: 100%;
+            }
+            .text {
+                color: white;
+                font-weight: 600;
+                font-size: 50px;
+                margin: 100px 30px;
+                font-family: 'Times New Roman', Times, serif;
+            }
+            .buttonMore{
+                width: 60%;
+                height: 30px;
+                background-color: #42f474;
+                outline: none;
+                position: relative;
+                top: -100px;
+                left: 30px;
+                box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.75);
+                line-height: 30px;
+                padding-left: 20px;
+                color: white;
+                font-weight: 600;
+                font-size: 18px;
+                &:before {
+                    content: "\2799";
+                    color: white;
+                    font-size: 25px;
+                    text-align: center;
+                    line-height: 30px;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 80px;
+                    height: 30px;
+                    background-color: black;
+                    pointer-events: none;
+                }
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            &:hover .grayFon {
+                background-color: rgba(71, 74, 81, 0);
+            }
+            &:hover .text {
+                color: #42f474;
+                cursor: pointer;
+            }
+            &:hover {
+                background-size: 110% 110%;
+                background-position: -30px -25px;
+            }
+        }
+    }

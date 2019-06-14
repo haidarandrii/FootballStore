@@ -1,0 +1,47 @@
+.products {
+        width: 100%;
+        min-height: 200px;
+        margin-top: 20px;
+        border-bottom: none;
+        background-color: white;
+        .flex {
+            display: flex;
+            justify-content: space-around;
+        }
+        .flexProducts {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+    }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 20px;
+        div {
+            margin-left: 30px;
+        }
+        .pagintaionButton {
+            padding: 5px 10px;
+            &:hover {
+                cursor: pointer;
+                background-color: gray;
+                color: white;
+            }
+        }
+        .current {
+            background-color: rgb(39, 156, 23);
+            color: white;
+            border: none;
+            transform: scale(1.3);
+            &:hover {
+                background-color:  rgb(39, 156, 23);
+                cursor: auto;
+            }
+        }
+        .threePoints {
+            font-size: 20px;
+            color: red;
+        }
+    }
+        

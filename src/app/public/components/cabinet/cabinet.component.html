@@ -1,7 +1,8 @@
 <main>
+  <div class="out" (click)="logOut()">Log out</div>
   <div class="picture"><i class="fas fa-user-circle"></i></div>
   <p>{{currentUser?.firstName}} {{currentUser?.secondName}}</p>
   <p>Email: {{currentUser?.email}}</p>
   <p>Password: {{currentUser?.password}}</p>
-  <p>Date of Birth: {{currentUser?.dateOfBirth}}</p>
+  <p>Date of Birth: {{currentUser?.dateOfBirth | date}}</p>
 </main>

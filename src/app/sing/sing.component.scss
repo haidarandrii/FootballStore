@@ -1,0 +1,19 @@
+form {
+    width: 70%;
+    margin: 0 auto;
+    position: relative;
+    padding: 10px 10px 40px;
+    .pass {
+        position: relative;
+        p {
+            position: absolute;
+            right: 3%;
+            bottom: -8px;
+            font-size: 20px;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
+    

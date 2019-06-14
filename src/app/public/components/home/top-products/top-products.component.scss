@@ -1,0 +1,23 @@
+.products {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    min-height: 400px;
+    align-items: center;
+    flex-wrap: wrap;
+   .product {
+    position: relative;
+    overflow: hidden;
+   }
+    .top {
+        width: 150px;
+        position: absolute;
+        transform: rotate(-45deg);
+        background-color: red;
+        color: white;
+        z-index: 999;
+        left: -40px;
+        padding-right: 40px;
+        font-weight: 900;
+    }
+}

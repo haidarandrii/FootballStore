@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IUser } from 'src/app/shared/interfaces/user';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
+import { LogOut } from 'src/app/redux/Actions/register.action';
 
 @Component({
   selector: 'app-cabinet',
@@ -14,5 +15,8 @@ export class CabinetComponent implements OnInit {
     this.store.select('registerPage').subscribe(d => this.currentUser = d.currentUser);
   }
   ngOnInit() {
+  }
+  public logOut(): void {
+    this.store.dispatch(new LogOut());
   }
 }

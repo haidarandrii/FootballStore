@@ -11,6 +11,11 @@ import { PublicRoutingModule } from './public-routing.module';
 import { ProductService } from '../shared/services/product.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CabinetComponent } from './components/cabinet/cabinet.component';
+import { PhotoComponent } from './components/home/photo/photo.component';
+import { TopProductsComponent } from './components/home/top-products/top-products.component';
+import { BrandsComponent } from './components/home/brands/brands.component';
+import { QuestionComponent } from './components/contact/question/question.component';
+import { SocialComponent } from './components/contact/social/social.component';
 
 
 
@@ -22,6 +27,11 @@ import { CabinetComponent } from './components/cabinet/cabinet.component';
     ContactComponent,
     NotFoundComponent,
     CabinetComponent,
+    PhotoComponent,
+    TopProductsComponent,
+    BrandsComponent,
+    QuestionComponent,
+    SocialComponent,
   ],
   imports: [
     CommonModule,

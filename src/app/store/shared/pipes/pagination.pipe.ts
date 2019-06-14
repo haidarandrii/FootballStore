@@ -6,16 +6,16 @@ import { ViewService } from '../../services/view.service';
   name: 'pagination'
 })
 export class PaginationPipe implements PipeTransform {
-  constructor (private viewService: ViewService) {}
+  constructor(private viewService: ViewService) {}
 
   transform(arrayProduct: Array<IProduct>, pages: number): Array<IProduct> {
-    let productsOnPage: Array<IProduct> = [];
+    const productsOnPage: Array<IProduct> = [];
     this.viewService.arrayProductLength = arrayProduct.length;
     for (let i = (pages - 1) * 10; i < (pages - 1) * 10 + 10; i++) {
       if (i === arrayProduct.length) {
         return productsOnPage;
       }
-        productsOnPage.push(arrayProduct[i]);        
+      productsOnPage.push(arrayProduct[i]);
       }
     return productsOnPage;
 }

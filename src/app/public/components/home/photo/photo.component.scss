@@ -1,0 +1,54 @@
+.photo {
+        background-image: url(https://glowville.files.wordpress.com/2015/01/football-stars-hd-wallpapers-8.jpg);
+        background-size: contain no-repeat;
+        background-position-y: 1050px; 
+        background-position-x: center;
+        width: 100%;
+        height: 300px;
+        margin-top: 20px;
+        animation: photo 3s;
+    }
+    .quote {
+        width: 350px;
+        min-height: 100px;
+        font-family: cursive;
+        margin: 20px auto;
+        text-align: center;
+        font-size: 15px;
+        animation: quote 1s;
+        border-top: 5px solid green;
+        p {
+            color: darkblue;
+            font-weight: 900;
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+    .quotes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    @keyframes quote {
+        from {
+            opacity: 0;
+            transform: scale(0) rotate(90deg);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) rotate(0);
+        }
+    }
+    @keyframes photo {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @media screen and (max-width: 750px) {
+        .quotes {
+            display: none;
+        }
+    }

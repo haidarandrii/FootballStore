@@ -34,6 +34,11 @@ export function registerReducer(state = initialState, action: ActionWithPayload)
                 loading: false,
                 error: action.payload
             };
+        case ACTIONS.LOG_OUT:
+            return {
+                ...state,
+                currentUser: undefined
+            };
         default:
             return state;
     }
