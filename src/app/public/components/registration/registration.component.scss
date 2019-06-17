@@ -1,0 +1,41 @@
+.ng-valid.ng-dirty:not(form) {
+    border: solid 2px lightgreen;
+}  
+.ng-invalid.ng-dirty:not(form), 
+.ng-invalid:not(form).form-submitted {
+    border: solid 2px lightcoral;
+}
+form {
+    width: 70%;
+    margin: 0 auto;
+    position: relative;
+    padding: 10px 10px 40px;
+    .pass {
+        position: relative;
+        p {
+            position: absolute;
+            right: 3%;
+            bottom: -8px;
+            font-size: 20px;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+    .closed {
+        position: absolute;
+        top: 5%;
+        right: 1%;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    label, div {
+        margin-top: 10px;
+    }
+    button {
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+    }
+}

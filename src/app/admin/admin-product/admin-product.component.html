@@ -1,40 +1,77 @@
 <main>
   <div class="addProduct">
-    <div class="flex">
-      <p>Name</p>
-      <div>
-        <input type="text" [(ngModel)]="name" placeholder="type here name" required>
-      </div>
-    </div>
-    <div class="flex">
-      <p>Category</p>
-      <div>
-        <input type="text" [(ngModel)]="category" placeholder="type here Category" required>
-      </div>
-    </div>
-    <div class="flex">
-      <p>Brand</p>
-      <div>
-        <input type="text" [(ngModel)]="brand" placeholder="type here Brand" required>
-      </div>
-    </div>
-    <div class="flex">
-      <p>Image(URL)</p>
-      <div>
-        <input type="text" [(ngModel)]="image" placeholder="type here ulr " required>
-      </div>
-    </div>
-    <div class="flex">
-      <p>Price</p>
-      <div>
-        <input type="number" [(ngModel)]="price" placeholder="type here price" required>
-      </div>
-    </div>
-    <div class="flex">
-      <p>Description</p>
-      <textarea name="" id="" cols="80" rows="3" [(ngModel)]="description" placeholder="type here description"
-        required></textarea>
-    </div>
+       <div class="form-group row">
+        <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10 pass">
+          <input 
+            type="text" 
+            class="form-control" 
+            id="inputName" 
+            placeholder="Name" 
+            [(ngModel)]="name"
+            >
+        </div>
+       </div>
+        <div class="form-group row">
+          <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
+          <div class="col-sm-10 pass">
+            <input 
+              type="text" 
+              class="form-control" 
+              id="inputCategory" 
+              placeholder="Category" 
+              [(ngModel)]="category"
+              >
+          </div>
+        </div>
+          <div class="form-group row">
+            <label for="inputBrand" class="col-sm-2 col-form-label">Brand</label>
+            <div class="col-sm-10 pass">
+              <input 
+                type="text" 
+                class="form-control" 
+                id="inputBrand" 
+                placeholder="Brand" 
+                [(ngModel)]="brand"
+                >
+            </div>
+          </div>
+            <div class="form-group row">
+              <label for="inputImage" class="col-sm-2 col-form-label">Image(URL)</label>
+              <div class="col-sm-10 pass">
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="inputImage" 
+                  placeholder="Image" 
+                  [(ngModel)]="image"
+                  >
+              </div>
+            </div>
+              <div class="form-group row">
+                <label for="inputPrice" class="col-sm-2 col-form-label">Price</label>
+                <div class="col-sm-10 pass">
+                  <input 
+                    type="number" 
+                    class="form-control" 
+                    id="inputPrice" 
+                    placeholder="Price" 
+                    [(ngModel)]="price"
+                    >
+                </div>
+              </div>
+    <div class="form-group row">
+                <label for="inputDescription" class="col-sm-2 col-form-label">Descriptions</label>
+                <div class="col-sm-10 pass">
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    id="inputDescription" 
+                    placeholder="Description" 
+                    [(ngModel)]="description"
+                    >
+                </div>
+              </div>
     <button *ngIf="!updateTrue" type="button" class="btn btn-success col-12" (click)="addProduct()">ADD</button>
     <button *ngIf="updateTrue" type="button" class="btn btn-warning col-12" (click)="saveJsonProduct()">UPDATE</button>
   </div>
@@ -64,5 +101,4 @@
       </tr>
     </tbody>
   </table>
-
 </main>

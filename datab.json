@@ -648,6 +648,15 @@
       "image": "https://ezshopnetcdn.azureedge.net/files/images/products/18800/18756_psg-away-shorts-2016-17_01.png",
       "brands": "nike",
       "descriptions": "Lorem ipsum dolor sit amet consectetur adipisicing elit"
+    },
+    {
+      "id": 40,
+      "name": "West Ham United T-Shirt",
+      "price": 25,
+      "category": "t-shirt",
+      "image": "https://images-na.ssl-images-amazon.com/images/I/61K-QLl5W2L._SX425_.jpg",
+      "brands": "umbro",
+      "descriptions": "lorem lorem"
     }
   ],
   "adminOrder": [
@@ -1874,6 +1883,14 @@
       "email": "haianfdriy@gmail.com",
       "password": "123456A",
       "id": 4
+    },
+    {
+      "firstName": "fdv",
+      "secondName": "vk",
+      "dateOfBirth": "1243-01-31T21:57:56.000Z",
+      "email": "dsljkjds@gmail.com",
+      "password": "1234567",
+      "id": 5
     }
   ]
 }

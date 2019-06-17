@@ -16,12 +16,10 @@ import { basketProductReducer } from './redux/Reducers/basket.product.reducer';
 import { deleteBasketProductReducer } from './redux/Reducers/delete.basket.product.reducer';
 import { getBrandsReducer } from './redux/Reducers/get.brands.reducer';
 import { getCategoriesReducer } from './redux/Reducers/get.categories.reducer';
-import { DateInputsModule, CalendarModule } from '@progress/kendo-angular-dateinputs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { addCategoryReducer } from './redux/Reducers/filterCategory.reducer';
 import { addBasketReducer } from './redux/Reducers/basket.reducer';
-import { SingComponent } from './sing/sing.component';
-import { RegistrationComponent } from './registration/registration.component';
+import { actionReducer } from './redux/Reducers/actions.reducer';
 
 
 
@@ -31,8 +29,6 @@ import { RegistrationComponent } from './registration/registration.component';
     AppComponent,
     FooterComponent,
     HeaderComponent,
-    SingComponent,
-    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -49,10 +45,9 @@ import { RegistrationComponent } from './registration/registration.component';
       getBrandsPage: getBrandsReducer,
       getCategoriesPage: getCategoriesReducer,
       filterCategoryPage: addCategoryReducer,
-      basketPage: addBasketReducer}),
-    DateInputsModule,
+      basketPage: addBasketReducer,
+      actionsPage: actionReducer}),
     BrowserAnimationsModule,
-    CalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

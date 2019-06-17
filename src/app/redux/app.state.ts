@@ -13,6 +13,7 @@ export interface AppState {
     getCategoriesPage: IGetCategories;
     filterCategoryPage: IFilterCategory;
     basketPage;
+    actionsPage;
 }
 export interface ActionWithPayload extends Action {
     payload?: any;

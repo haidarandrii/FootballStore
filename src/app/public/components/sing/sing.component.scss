@@ -15,5 +15,21 @@ form {
             }
         }
     }
+    .closed {
+        position: absolute;
+        top: 5%;
+        right: 1%;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    label, div {
+        margin-top: 10px;
+    }
+    button {
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+    }
 }
     

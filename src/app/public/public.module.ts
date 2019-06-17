@@ -16,6 +16,10 @@ import { TopProductsComponent } from './components/home/top-products/top-product
 import { BrandsComponent } from './components/home/brands/brands.component';
 import { QuestionComponent } from './components/contact/question/question.component';
 import { SocialComponent } from './components/contact/social/social.component';
+import { SingComponent } from './components/sing/sing.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { DateInputsModule, CalendarModule } from '@progress/kendo-angular-dateinputs';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -32,12 +36,17 @@ import { SocialComponent } from './components/contact/social/social.component';
     BrandsComponent,
     QuestionComponent,
     SocialComponent,
+    SingComponent,
+    RegistrationComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     PublicRoutingModule,
     HttpClientModule,
+    DateInputsModule,
+    CalendarModule,
+    ReactiveFormsModule
 
   ],
   providers: [
