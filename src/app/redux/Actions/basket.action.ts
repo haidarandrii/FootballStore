@@ -8,3 +8,4 @@ export class AddDataBasket implements ActionWithPayload {
     readonly type = ACTIONS.ADD_DATA_BASKET;
     constructor(public payload: {}) {}
 }
+

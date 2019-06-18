@@ -3,21 +3,6 @@
 }
 
 
-@keyframes fadeSearch {
-    from {
-        transform: scale(0);
-    }
-    to {
-        transform: scale(1);
-    }
-}
-@media screen and (max-width: 1200px) {
-    .filters {
-        display: none;
-    }
-}
-@media screen and (max-width: 480px) {
-    section {
-        display: none;
-    }
-}
+
+
+

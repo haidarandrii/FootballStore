@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../shared/services/question.service';
 import { IQuestion } from '../shared/interfaces/question';
-import { Question } from '../shared/clases/newQuestion';
 
 @Component({
   selector: 'app-questions',
@@ -29,7 +28,7 @@ export class QuestionsComponent implements OnInit {
     this.answer = undefined;
   }
   public sendAnswer(): void {
-    if (this.answer ===  undefined ) {
+    if (this.answer === undefined) {
       this.empty = true;
     } else {
       this.empty = false;

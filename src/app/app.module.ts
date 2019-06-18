@@ -20,15 +20,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { addCategoryReducer } from './redux/Reducers/filterCategory.reducer';
 import { addBasketReducer } from './redux/Reducers/basket.reducer';
 import { actionReducer } from './redux/Reducers/actions.reducer';
-
-
-
+import { adminReducer } from './redux/Reducers/admin.reducer';
+import { SingComponent } from './sing/sing.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { DateInputsModule, CalendarModule } from '@progress/kendo-angular-dateinputs';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
     HeaderComponent,
+    SingComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,8 @@ import { actionReducer } from './redux/Reducers/actions.reducer';
     PublicModule,
     StoreeModule,
     AdminModule,
+    DateInputsModule,
+    CalendarModule,
     StoreModule.forRoot({registerPage: registerReducer,
       productPage: productReducer,
       basketProductPage: basketProductReducer,
@@ -46,7 +51,8 @@ import { actionReducer } from './redux/Reducers/actions.reducer';
       getCategoriesPage: getCategoriesReducer,
       filterCategoryPage: addCategoryReducer,
       basketPage: addBasketReducer,
-      actionsPage: actionReducer}),
+      actionsPage: actionReducer,
+      adminPage: adminReducer}),
     BrowserAnimationsModule,
   ],
   providers: [],

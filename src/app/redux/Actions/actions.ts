@@ -1,5 +1,6 @@
 import { ActionWithPayload } from '../app.state';
 
+// tslint:disable-next-line:no-namespace
 export namespace ACTIONS {
     export const SHOW_REGISTRATION = 'SHOW_REGISTRATION';
     export const SHOW_SING_IN = 'SHOW_SING_IN';

@@ -1,19 +1,20 @@
 <p class="title">Top product</p>
 <div class="products">
-    <div class="product" *ngFor="let product of filterProduct; let i = index">
-        <p class="top">TOP<i class="fas fa-fire"></i></p>
-        <div class="hover">
-            <img [src]="product.image" [alt]="product.name" width="150" height="150">
-            <div class="describe">
-                <p routerLink="/store/{{product.id}}">View</p>
-            </div>
-        </div>
-        <p class="name">{{ product.name }}</p>
-        <div class="flex">
-            <p class="price">$ {{ product.price | number:'2.2-2' }}</p>
-            <p><i class="fas fa-money-bill-wave"></i></p>
-        </div>
-        <button class="toBasket" [disabled]="existInBasket(product)"
-            (click)="addToBasket(product)">{{existInBasket(product) ? 'In' : 'To'}} basket</button>
+  <div class="product" *ngFor="let product of filterProduct; let i = index">
+    <p class="top">TOP<i class="fas fa-fire"></i></p>
+    <div class="hover">
+      <img [src]="product.image" [alt]="product.name" width="150" height="150">
+      <div class="describe">
+        <p routerLink="/store/{{product.id}}">View</p>
+      </div>
     </div>
+    <p class="name">{{ product.name }}</p>
+    <div class="flex">
+      <p class="price">$ {{ product.price | number:'2.2-2' }}</p>
+      <p><i class="fas fa-money-bill-wave"></i></p>
+    </div>
+    <button class="toBasket" [disabled]="existInBasket(product)" (click)="addToBasket(product)">
+      {{existInBasket(product) ? 'In' : 'To'}} basket
+    </button>
+  </div>
 </div>

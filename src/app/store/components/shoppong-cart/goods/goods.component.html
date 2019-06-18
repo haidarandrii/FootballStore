@@ -7,30 +7,3 @@
       <button class="btn btn-danger" (click)="delProductBasket(product)">DELETE</button>
     </div>
   </div>
-  <div class="but">
-    <button class="btn btn-warning col-3">Full price: {{ fullPrice() }} $</button>
-    <button class="btn btn-success col-3" (click)="modalSuccesTrue()" >Confirm</button>
-  </div>
-  <div class="modal" *ngIf="modalTrue" (click)="clickModal()">
-      <div class="window" (click)="$event.stopPropagation()">
-        <p>Opsss....<i class="fas fa-hand-paper"></i></p>
-        <p>You must fill all field!</p>
-        <button class="btn btn-success" (click)="clickModal()">Okay!</button>
-      </div>
-  </div>
-  <section>
-      <div class="modal" *ngIf="modalSuccess">
-          <div class="successModalWindow" [ngClass]="{'yellow': confirmModalTrue, 'green' : !confirmModalTrue}">
-            <div class="confirm" *ngIf="confirmModalTrue">
-            <p>Do you want confirm order?</p>
-            <button class="btn btn-warning" (click)="modalSuccessFalse()">No</button>
-            <button class="btn btn-success" (click)="confirm()">Confirm order</button>
-          </div>
-          <div class="goHome" *ngIf="goHomeTrue">
-            <p><i class="fas fa-hands-helping"></i></p>
-            <p>Done</p>
-            <button class="btn btn-primary" routerLink="/">Go home</button>
-          </div>
-          </div>
-        </div>
-  </section>

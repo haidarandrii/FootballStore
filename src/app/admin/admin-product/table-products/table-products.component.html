@@ -1,0 +1,28 @@
+<main>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Category</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Description</th>
+            <th scope="col">Brands</th>
+            <th scope="col">EDIT</th>
+            <th scope="col">DELETE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products" ng-change="getProduct()">
+            <td>{{ product.id }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.descriptions }}</td>
+            <td>{{ product.brands }}</td>
+            <td><button class="btn btn-warning" (click)="showEdit(product)">EDIT</button></td>
+            <td><button class="btn btn-danger" (click)="isDeleteProduct(product)">DELETE</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </main>

@@ -1,0 +1,5 @@
+<div class="centr">
+  <p>New brand:</p>
+  <input type="text" class="col-6" [formControl]="brand" placeholder="new brand">
+  <button class="btn btn-success col-6" (click)="addBrand()" [disabled]="brand.invalid">ADD</button>
+</div>

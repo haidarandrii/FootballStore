@@ -12,8 +12,9 @@ export interface AppState {
     getBrandsPage: IGetBrandsState;
     getCategoriesPage: IGetCategories;
     filterCategoryPage: IFilterCategory;
-    basketPage;
+    basketPage: IBasket;
     actionsPage;
+    adminPage;
 }
 export interface ActionWithPayload extends Action {
     payload?: any;
@@ -54,4 +55,10 @@ export interface IFilterCategory {
     priceFilter: string;
     valueInput: string;
 }
-
+export interface IBasket {
+    data: {
+        firstName,
+        secondName,
+        address
+    };
+}

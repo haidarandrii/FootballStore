@@ -5,7 +5,7 @@ import { StartLoadProduct, SuccessLoadProduct, FailedLoadProduct } from 'src/app
 import { StartLoadBasketProduct, SuccessLoadBaskerProduct, FailedLoadBasketProduct } from 'src/app/redux/Actions/basket.product.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
-import { ProductService } from 'untitled folder/src/app/shared/services/product.service';
+import { ProductService } from 'src/app/shared/services/product.service';
 
 @Component({
   selector: 'app-products',
@@ -51,13 +51,14 @@ export class ProductsComponent implements OnInit {
     this.filteredProduct = this.products.filter(({ name }) =>
       name.toLowerCase().includes(this.filterValue.toLowerCase())
     );
-    console.log(this.filteredProduct);
     this.currentNumberPage = 1;
   }
   public addToBasket(product: IProduct): void {
-    this.productService.addBasketProducts(product).subscribe(
-      () => this.getBasketProduct(),
-    );
+
+    this.productService.addBasketProducts(product).subscribe(() => {
+      this.getBasketProduct();
+      this.store.dispatch(new SuccessLoadBaskerProduct(this.basketProduct));
+    });
   }
   public getProducts(): void {
     this.store.dispatch(new StartLoadProduct());
@@ -66,7 +67,6 @@ export class ProductsComponent implements OnInit {
         this.store.dispatch(new SuccessLoadProduct(data));
         this.store.select('productPage').subscribe(d => {
           this.products = d.products;
-          // this.loader = d.loading;
           this.filteredProduct = d.products;
         });
       },
@@ -82,7 +82,6 @@ export class ProductsComponent implements OnInit {
         this.store.dispatch(new SuccessLoadBaskerProduct(data));
         this.store.select('basketProductPage').subscribe(d => {
           this.basketProduct = d.basketProduct;
-          // this.loader = d.loading;
         });
       },
       err => {

@@ -5,8 +5,8 @@ import { AppState } from 'src/app/redux/app.state';
 import { ProductService } from 'src/app/shared/services/product.service';
 import { IProduct } from 'src/app/shared/interfaces/product';
 import { StartDeleteBasketProduct, SuccessDeleteBasketProduct } from 'src/app/redux/Actions/delete.basket.product.actions';
-import { OrderAdminService } from 'untitled folder/src/app/shared/services/order-admin.service';
 import { Order } from 'src/app/shared/clases/order';
+import { OrderAdminService } from 'src/app/shared/services/order-admin.service';
 
 @Component({
   selector: 'app-goods',
@@ -16,6 +16,11 @@ import { Order } from 'src/app/shared/clases/order';
 export class GoodsComponent implements OnInit {
   myProducts: Array<IProduct>;
   loader = false;
+  order = {
+    firstName: null,
+    secondName: null,
+    address: null
+  };
   constructor(
     private store: Store<AppState>,
     private productService: ProductService,
@@ -23,6 +28,7 @@ export class GoodsComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.getBasketProduct();
   }
   public getBasketProduct(): void {
     this.store.dispatch(new StartLoadBasketProduct());
@@ -31,7 +37,6 @@ export class GoodsComponent implements OnInit {
         this.store.dispatch(new SuccessLoadBaskerProduct(data));
         this.store.select('basketProductPage').subscribe(d => {
           this.myProducts = d.basketProduct;
-          // this.loader = d.loading;
         });
       },
       err => {
@@ -48,41 +53,4 @@ export class GoodsComponent implements OnInit {
       this.store.select('deleteBasketProductPage').subscribe(d => this.loader = d.loading);
     });
   }
-  // public confirm(): void {
-  //   this.orderAdminService.addJsonOrderProduct(new Order(this.myProducts,
-  //     this.firstName, this.secondName, this.address, 'created')).subscribe();
-  //     // tslint:disable-next-line:prefer-for-of
-  //   for (let i = 0; i < this.myProducts.length; i++ ) {
-  //     const index = this.myProducts[i].id;
-  //     this.productService.delBasketsProducts(index).subscribe(() => {
-  //       this.getBasketProduct();
-  //     });
-  //   }
-  //   this.firstName = null;
-  //   this.secondName = null;
-  //   this.address = null;
-  //   this.confirmModalTrue = false;
-  //   this.goHomeTrue = true;
-  // }
-  public fullPrice(): number {
-    const result = this.myProducts.reduce((acum, a) => {
-      return acum + a.price;
-    }, 0);
-    return result;
-  }
-  // public modalSuccesTrue(): void {
-  //   if ((this.firstName === null || undefined)
-  //   || (this.secondName === null || undefined) || (this.address === undefined || null)) {
-  //     this.modalTrue = true;
-  //   } else {
-  //   this.modalSuccess = true;
-  //   this.confirmModalTrue = true;
-  //   }
-  // }
-  // public clickModal(): void {
-  //   this.modalTrue = false;
-  // }
-  // public modalSuccessFalse(): void {
-  //   this.modalSuccess = false;
-  // }
 }

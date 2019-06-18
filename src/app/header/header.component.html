@@ -2,22 +2,22 @@
   <p>Loading....</p>
 </div>
 <section>
-    <div class="menu" (click)="showMenu()">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-    </div>
-<div *ngIf="!trueMenuMedia">
-  <p class="nameCompany">Football Store</p>
-  <p class="exclusiveDesign">Exclusive designs</p>
-  <p class="extraordinaryCollections">Extraordinary Collections</p>
-</div>
-  <div class="mediaMenu" *ngIf="trueMenuMedia" >
-      <p routerLink="/">home</p>
-      <p routerLink="/store">store</p>
-      <p routerLink="/about-us">about</p>
-      <p routerLink="/contact">contact</p>
-      <p routerLink="/store/shopping-cart">basket</p>
+  <div class="menu" (click)="showMenu()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+  <div *ngIf="!trueMenuMedia">
+    <p class="nameCompany">Football Store</p>
+    <p class="exclusiveDesign">Exclusive designs</p>
+    <p class="extraordinaryCollections">Extraordinary Collections</p>
+  </div>
+  <div class="mediaMenu" *ngIf="trueMenuMedia">
+    <p routerLink="/">home</p>
+    <p routerLink="/store">store</p>
+    <p routerLink="/about-us">about</p>
+    <p routerLink="/contact">contact</p>
+    <p routerLink="/store/shopping-cart">basket "{{count}}"</p>
   </div>
 </section>
 <header>
@@ -28,7 +28,7 @@
       <p routerLink="/store">store</p>
       <p routerLink="/about-us">about</p>
       <p routerLink="/contact">contact</p>
-      <p routerLink="/store/shopping-cart"><i class="fas fa-shopping-cart" *ngIf="getCounter()">{{count}}</i></p>
+      <p routerLink="/store/shopping-cart"><i class="fas fa-shopping-cart">{{count}}</i></p>
     </nav>
   </div>
   <div class="menuFull">
@@ -38,7 +38,7 @@
       <p routerLink="/store">store</p>
       <p routerLink="/about-us">about</p>
       <p routerLink="/contact">contact</p>
-      <p routerLink="/store/shopping-cart"><i class="fas fa-shopping-cart"></i></p>
+      <p routerLink="/store/shopping-cart"><i class="fas fa-shopping-cart">{{count}}</i></p>
     </nav>
   </div>
   <div class="dercribe">
@@ -47,13 +47,12 @@
     <p class="extraordinaryCollections">Extraordinary Collections</p>
   </div>
   <div class="buttonsReg" *ngIf="!currentUser">
-    <div class="singIn" (click)="singInTrue()">Sing In<i class="fas fa-user-edit"></i></div>
-    <div class="singIn regestration" (click)="ifRegistrationTrue()">Regestration<i class="fas fa-user-plus"></i></div>
+    <div class="singIn" (click)="singInTrue()">Sign In<i class="fas fa-user-edit"></i></div>
+    <div class="singIn regestration" (click)="ifRegistrationTrue()">Registration<i class="fas fa-user-plus"></i></div>
   </div>
   <div class="dataUser" *ngIf="currentUser">
     <div class="pic" routerLink="/cabinet"><i class="fas fa-user-tie"></i></div>
     <p>{{currentUser?.firstName}} {{currentUser?.secondName}}</p>
     <p>{{currentUser?.email}}</p>
   </div>
-  </header>
-  
+</header>

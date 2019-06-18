@@ -1,7 +1,6 @@
 import { IUser } from 'src/app/shared/interfaces/user';
 import { ActionWithPayload } from '../app.state';
 
-// tslint:disable-next-line:no-namespace
 export namespace ACTIONS {
     export const SING_UP = 'SING_UP';
     export const SING_IN = 'SING_IN';

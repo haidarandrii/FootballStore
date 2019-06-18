@@ -16,32 +16,8 @@ export class AdminBrandComponent implements OnInit {
   categories: Array<ICategory>;
   constructor(private productService: ProductService) { }
   ngOnInit() {
-    this.getProducts();
     this.getBrands();
-    this.getCategories();
   }
-  public getProducts(): void {
-    this.productService.getJsonProduct().subscribe(
-      data => {
-        this.products = data;
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
-  public getCategories(): void {
-    this.productService.getJsonCategory().subscribe(
-      data => {
-        this.categories = data;
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
   public getBrands(): void {
     this.productService.getJsonBrands().subscribe(
       data => {
@@ -51,18 +27,5 @@ export class AdminBrandComponent implements OnInit {
         console.log(err);
       }
     );
-  }
-  public addBrand(): void {
-    if (this.brand === undefined) {
-
-    } else {
-      const newBrand: IBrand = {
-        name: this.brand,
-      };
-      this.productService.addJsonBrand(newBrand).subscribe(() => {
-        this.getBrands();
-      });
-      this.brand = undefined;
-    }
   }
 }

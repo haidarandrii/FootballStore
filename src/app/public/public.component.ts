@@ -15,12 +15,7 @@ export class PublicComponent implements OnInit {
   singIn: string;
   constructor(
     private store: Store<AppState>
-  ) {
-    this.store.select('actionsPage').subscribe(d => {
-      this.registration = d.registrationStatus;
-      this.singIn = d.singInStatus;
-    })
+  ) {}
+  ngOnInit() {
   }
- ngOnInit() {
- }
 }

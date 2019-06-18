@@ -1,20 +1,27 @@
 import { IProduct } from '../interfaces/product';
 
 export class Product implements IProduct {
-    id: number;
     name: string;
     price: number;
     category: string;
     image: string;
     brands: string;
     descriptions?: string;
-    constructor(id, name, price, category, image, brand, description ) {
-        this.id = id;
+    id?: number;
+    constructor(product?: IProduct) {
+        const {
+            name = '',
+            category = '',
+            price = 0,
+            image = '',
+            brands = '',
+            descriptions = ''
+        } = product || {};
         this.name = name;
-        this.price = price;
         this.category = category;
+        this.price = price;
         this.image = image;
-        this.brands = brand;
-        this.descriptions = description;
+        this.brands = brands;
+        this.descriptions = descriptions;
     }
 }

@@ -37,10 +37,7 @@ export class ShoppongCartComponent implements OnInit {
     this.productService.getBasketProduct().subscribe(
       data => {
         this.store.dispatch(new SuccessLoadBaskerProduct(data));
-        this.store.select('basketProductPage').subscribe(d => {
-          this.myProducts = d.basketProduct;
-          this.loader = d.loading;
-        });
+        this.store.select('basketProductPage').subscribe(d => this.myProducts = d.basketProduct);
       },
       err => {
         this.store.dispatch(new FailedLoadBasketProduct(err));

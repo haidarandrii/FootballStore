@@ -38,3 +38,11 @@ input[type="text"] {
         transform: scale(1.2);
     }
 }
+@keyframes fadeSearch {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}

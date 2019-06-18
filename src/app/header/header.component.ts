@@ -2,14 +2,11 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../shared/services/product.service';
 import { IProduct } from '../shared/interfaces/product';
-import { UserService } from '../shared/services/user.service';
-import { User } from '../shared/clases/user';
 import { IUser } from '../shared/interfaces/user';
 import { Store } from '@ngrx/store';
 import { AppState } from '../redux/app.state';
-import { SingUp, Failed, SingIn, StartProccess } from '../redux/Actions/register.action';
 import { FormValidator } from '../store/shared/validator';
-import { SingInStatus, RegistrationStatus, CloseForms } from '../redux/Actions/actions';
+import { SingInStatus, RegistrationStatus } from '../redux/Actions/actions';
 
 @Component({
   selector: 'app-header',
@@ -45,7 +42,7 @@ export class HeaderComponent implements OnInit {
       FormValidator.matchingPasswords(this, 'registerForm'),
     ])
   });
-  count: number;
+  count = 0;
   myProducts: Array<IProduct> = [];
   trueMenuMedia = false;
   inputs = [];
@@ -60,12 +57,13 @@ export class HeaderComponent implements OnInit {
   currentUser: IUser;
   constructor(
     private productService: ProductService,
-    private userSevice: UserService,
     private store: Store<AppState>,
   ) {
-    this.store.select('registerPage').subscribe(d => this.loader = d.loading);
     this.store.select('registerPage').subscribe(d => {
         this.currentUser = d.currentUser;
+    });
+    this.store.select('basketProductPage').subscribe(data => {
+        this.count = data.basketProduct.length;
     });
   }
   public scroll: number;
@@ -79,23 +77,17 @@ export class HeaderComponent implements OnInit {
     this.getCounter();
     this.getBasketProducts();
   }
-  @HostListener('click', ['$event.target'])
-  onClick(btn) {
-    this.getBasketProducts();
- }
-
- public getCounter(): boolean {
-   this.count = this.productService.countBasket;
-   return true;
- }
- public showMenu(): void {
-   this.trueMenuMedia = !this.trueMenuMedia;
- }
+  public getCounter(): boolean {
+    this.count = this.productService.countBasket;
+    return true;
+  }
+  public showMenu(): void {
+    this.trueMenuMedia = !this.trueMenuMedia;
+  }
   public getBasketProducts(): void {
     this.productService.getBasketProduct().subscribe(
       data => {
         this.myProducts = data;
-        console.log(this.registerForm);
       },
       err => {
         console.log(err);
