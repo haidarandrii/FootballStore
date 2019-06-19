@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ProductService } from 'src/app/shared/services/product.service';
 import { AppState } from 'src/app/redux/app.state';
 import { Store } from '@ngrx/store';
 import { IProduct } from 'src/app/shared/interfaces/product';
 import { StartLoadProduct, SuccessLoadProduct, FailedLoadProduct } from 'src/app/redux/Actions/product.actions';
 import { StartLoadBasketProduct, SuccessLoadBaskerProduct, FailedLoadBasketProduct } from 'src/app/redux/Actions/basket.product.actions';
+import { BasketServiceService } from 'src/app/shared/services/basket-service.service';
+import { QUANTITY_TOP_PRODUCT } from '../../const';
 
 @Component({
   selector: 'app-top-products',
   templateUrl: './top-products.component.html',
   styleUrls: ['./top-products.component.scss']
 })
-export class TopProductsComponent implements OnInit {
+export class TopProductsComponent {
   constructor(
     private productService: ProductService,
-    private store: Store<AppState>) {
+    private store: Store<AppState>,
+    private basketService: BasketServiceService) {
       this.getProduct();
       this.getBasketProduct();
   }
@@ -22,16 +25,13 @@ export class TopProductsComponent implements OnInit {
   products: Array<IProduct>;
   basketProduct: Array<IProduct> = [];
   filterProduct: Array<IProduct> = [];
-  ngOnInit() {
-  }
   public getProduct(): void {
     this.store.dispatch(new StartLoadProduct());
     this.productService.getJsonProduct().subscribe(
       data => {
-        // this.products = data;
         this.store.dispatch(new SuccessLoadProduct(data));
-        this.store.select('productPage').subscribe(d => {
-          this.products = d.products;
+        this.store.select('productPage').subscribe(data => {
+          this.products = data.products;
           this.filteredProducts();
         });
       },
@@ -41,35 +41,20 @@ export class TopProductsComponent implements OnInit {
     );
   }
   public filteredProducts(): void {
-    const array: Array<number> = [];
-    for (let i = 0; i < 4; i++) {
-      let count = 0;
+    const numArray = [];
+    for (let i = 0; i < QUANTITY_TOP_PRODUCT; i++) {
       const num = Math.floor(Math.random() * this.products.length);
-      if (this.products[num] === undefined) {
-        i--;
-      } else if (array.length === 0) {
+      if (!numArray.some(elem => elem === num)) {
+        numArray.push(num);
         this.filterProduct.push(this.products[num]);
-        array[i] = num;
-      } else if (array.length > 0) {
-        // tslint:disable-next-line:prefer-for-of
-        for (let q = 0; q < array.length; q++) {
-          if (num === array[q]) {
-            count++;
-          }
-        }
-        if (count > 0) {
-          i--;
-        } else {
-          this.filterProduct.push(this.products[num]);
-          array[i] = num;
-        }
-
+      } else {
+        i--;
       }
     }
   }
   public getBasketProduct(): void {
     this.store.dispatch(new StartLoadBasketProduct());
-    this.productService.getBasketProduct().subscribe(
+    this.basketService.getBasketProduct().subscribe(
       data => {
         this.store.dispatch(new SuccessLoadBaskerProduct(data));
         this.store.select('basketProductPage').subscribe(d => this.basketProduct = d.basketProduct);
@@ -80,17 +65,11 @@ export class TopProductsComponent implements OnInit {
     );
   }
   public addToBasket(product: IProduct): void {
-    this.productService.addBasketProducts(product).subscribe(
+    this.basketService.addBasketProducts(product).subscribe(
       () => this.getBasketProduct(),
     );
   }
   public existInBasket(product: IProduct): boolean {
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < this.basketProduct.length; i++) {
-      if (product.id === this.basketProduct[i].id) {
-        return true;
-      }
-    }
-    return false;
+    return this.basketProduct.some(basketProduct => product.id === basketProduct.id);
   }
 }

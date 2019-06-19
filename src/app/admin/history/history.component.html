@@ -1,7 +1,7 @@
 <main>
-    <div class="title">HISTORY ORDERS</div>
-    <div *ngFor="let order of orders | orderStatus: 'delivered'; let i = index ">
-      <p class="number">Order # {{i+1}}</p>
+  <div class="title">HISTORY ORDERS</div>
+  <div *ngFor="let order of orders | orderStatus: orderStatus; let i = index ">
+    <p class="number">Order # {{i+1}}</p>
     <table class="table table-active">
       <thead>
         <tr>
@@ -27,4 +27,4 @@
       </tbody>
     </table>
   </div>
-  </main>
+</main>

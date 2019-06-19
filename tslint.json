@@ -71,6 +71,8 @@
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,
-    "no-namespace": false
+    "no-namespace": false,
+    "no-unused-expression": false,
+    "no-shadowed-variable": false
   }
 }

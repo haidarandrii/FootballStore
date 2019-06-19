@@ -10,16 +10,10 @@ export class CategoryImagePipe implements PipeTransform {
     if (arrayProduct === undefined) {
       return arrayProduct;
     }
-    const filteredProduct: Array<IProduct> = [];
     if (category === undefined) {
       return arrayProduct;
     }
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < arrayProduct.length; i++) {
-      if (arrayProduct[i].category === category) {
-        filteredProduct.push(arrayProduct[i]);
-      }
-    }
-    return filteredProduct;
+    arrayProduct = arrayProduct.filter(product => product.category === category);
+    return arrayProduct;
   }
 }

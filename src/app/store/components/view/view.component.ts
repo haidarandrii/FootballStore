@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewService } from '../../services/view.service';
 import { IProduct } from 'src/app/shared/interfaces/product';
-import { ProductService } from 'src/app/shared/services/product.service';
 import { ActivatedRoute } from '@angular/router';
-import { Product } from 'src/app/shared/clases/product';
+import { BasketServiceService } from 'src/app/shared/services/basket-service.service';
 
 @Component({
   selector: 'app-view',
@@ -16,7 +15,7 @@ export class ViewComponent implements OnInit {
   basketProduct: Array<IProduct> = [];
   constructor(
     private viewService: ViewService,
-    private productService: ProductService,
+    private basketService: BasketServiceService,
     private route: ActivatedRoute,
   ) {
   }
@@ -30,14 +29,11 @@ export class ViewComponent implements OnInit {
     this.viewService.getJsonProduct(this.productId).subscribe(
       data => {
         this.viewProduct = data;
-      },
-      err => {
-        console.log(err);
       }
     );
   }
   public getBasketProduct(): void {
-    this.productService.getBasketProduct().subscribe(
+    this.basketService.getBasketProduct().subscribe(
       data => {
         this.basketProduct = data;
       },
@@ -47,7 +43,7 @@ export class ViewComponent implements OnInit {
     );
   }
   public addToBasket(product: IProduct): void {
-    this.productService.addBasketProducts(product).subscribe(
+    this.basketService.addBasketProducts(product).subscribe(
       () => this.getBasketProduct(),
     );
   }
@@ -55,12 +51,6 @@ export class ViewComponent implements OnInit {
     if (!this.viewProduct) {
       return false;
     }
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < this.basketProduct.length; i++) {
-      if (this.viewProduct.id === this.basketProduct[i].id) {
-        return true;
-      }
-    }
-    return false;
+    return this.basketProduct.some(product => product.id === this.viewProduct.id);
   }
 }

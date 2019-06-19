@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ICategory } from 'src/app/store/shared/interface/ICategory';
-import { ProductService } from 'src/app/shared/services/product.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
+import { CategoryServiceService } from 'src/app/shared/services/category-service.service';
 
 @Component({
   selector: 'app-table-category',
@@ -13,11 +13,11 @@ export class TableCategoryComponent implements OnInit {
   categories: ICategory[];
   category: ICategory;
   constructor(
-    private productService: ProductService,
-    private store: Store<AppState>
+    private categoryService: CategoryServiceService,
+    private store: Store<AppState>,
   ) {
-    this.store.select('adminPage').subscribe(d => {
-      this.category = d.addCategory;
+    this.store.select('adminPage').subscribe(data => {
+      this.category = data.addCategory;
       this.getCategory();
     });
   }
@@ -26,12 +26,9 @@ export class TableCategoryComponent implements OnInit {
     this.getCategory();
   }
   public getCategory(): void {
-    this.productService.getJsonCategory().subscribe(
+    this.categoryService.getJsonCategory().subscribe(
       data => {
         this.categories = data;
-      },
-      err => {
-        console.log(err);
       }
     );
   }

@@ -1,17 +1,18 @@
 <main>
-    <img [src]="viewProduct?.image" alt="" width="300" height="300">
-    <div class="information">
-      <p>About produtc:</p>
-      <span>Name:</span>
-      <p> {{ viewProduct?.name }}</p>
-      <span>Category:</span>
-      <p> {{ viewProduct?.category }}</p>
-      <span>Brand:</span>
-      <p> {{ viewProduct?.brands }}</p>
-      <span>Price:</span>
-      <p> {{ viewProduct?.price | currency }}</p>
-      <span>Descriptions:</span>
-      <p> {{ viewProduct?.descriptions }}</p>
-      <button class="toBasket" [disabled]="existInBasket()" (click)="addToBasket(viewProduct)" >{{existInBasket() ? 'In' : 'To'}} basket</button>
-    </div>
+  <img [src]="viewProduct?.image" alt="" width="300" height="300">
+  <div class="information">
+    <p>About produtc:</p>
+    <span>Name:</span>
+    <p> {{ viewProduct?.name }}</p>
+    <span>Category:</span>
+    <p> {{ viewProduct?.category }}</p>
+    <span>Brand:</span>
+    <p> {{ viewProduct?.brands }}</p>
+    <span>Price:</span>
+    <p> {{ viewProduct?.price | currency }}</p>
+    <span>Descriptions:</span>
+    <p> {{ viewProduct?.descriptions }}</p>
+    <button class="toBasket" [disabled]="existInBasket()"
+      (click)="addToBasket(viewProduct)">{{existInBasket() ? 'In' : 'To'}} basket</button>
+  </div>
 </main>

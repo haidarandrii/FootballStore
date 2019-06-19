@@ -19,30 +19,30 @@ export class ProductFormComponent {
       Validators.minLength(2),
     ]),
     category: new FormControl('', [
-      Validators.required
+      Validators.required,
     ]),
     brands: new FormControl('', [
-      Validators.required
+      Validators.required,
     ]),
     image: new FormControl('', [
-      Validators.required
+      Validators.required,
     ]),
     price: new FormControl('', [
-      Validators.required
+      Validators.required,
     ]),
     descriptions: new FormControl('', [
       Validators.required,
-      Validators.minLength(4)
+      Validators.minLength(4),
     ])
   });
-  public updateTrue = false;
+  public showAddButton = false;
   public product: IProduct = new Product();
   constructor(
     private productService: ProductService,
     private store: Store<AppState>
   ) {
     this.store.select('adminPage').subscribe(d => {
-      this.updateTrue = d.update;
+      this.showAddButton = d.update;
       if (d.editProduct !== undefined) {
         this.product = d.editProduct;
         const { id, ...controls } = this.product;

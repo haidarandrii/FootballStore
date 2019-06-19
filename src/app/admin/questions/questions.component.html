@@ -18,7 +18,7 @@
   <div class="modal" *ngIf="modal" (click)="hideModal()">
     <div class="windowModal" (click)="$event.stopPropagation()">
       <label for="">
-        Answer: 
+        Answer:
         <input type="text" [(ngModel)]="answer" placeholder="type here answer...">
         <button class="btn btn-success" (click)="sendAnswer()">Send!</button>
       </label>

@@ -8,8 +8,8 @@ import { AppComponent } from './app.component';
 import { PublicModule } from './public/public.module';
 import { StoreeModule } from './store/store.module';
 import { AdminModule } from './admin/admin.module';
-import { FooterComponent } from './footer/footer.component';
-import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
 import { registerReducer } from './redux/Reducers/register.reducer';
 import { productReducer } from './redux/Reducers/product.reducer';
 import { basketProductReducer } from './redux/Reducers/basket.product.reducer';
@@ -21,8 +21,8 @@ import { addCategoryReducer } from './redux/Reducers/filterCategory.reducer';
 import { addBasketReducer } from './redux/Reducers/basket.reducer';
 import { actionReducer } from './redux/Reducers/actions.reducer';
 import { adminReducer } from './redux/Reducers/admin.reducer';
-import { SingComponent } from './sing/sing.component';
-import { RegistrationComponent } from './registration/registration.component';
+import { SignInComponent } from './components/signIn/signIn.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 import { DateInputsModule, CalendarModule } from '@progress/kendo-angular-dateinputs';
 
 @NgModule({
@@ -30,7 +30,7 @@ import { DateInputsModule, CalendarModule } from '@progress/kendo-angular-datein
     AppComponent,
     FooterComponent,
     HeaderComponent,
-    SingComponent,
+    SignInComponent,
     RegistrationComponent
   ],
   imports: [

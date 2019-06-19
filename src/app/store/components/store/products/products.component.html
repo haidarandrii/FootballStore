@@ -1,29 +1,33 @@
 <div class="products" id="toTop">
-    <div class="flexProducts">
-    <div class="product" *ngFor="let product of filteredProduct | categoryImage: imageCategoryFilter | checkboxCat: arrayCategoryFilterCheckbox:arrayBrandsFilterCheckbox | pagination: currentNumberPage ">
-        <div class="hover">
-            <img [src]="product?.image" [alt]="product?.name" width="150" height="150">
-            <div class="describe">
-                <p routerLink="/store/{{product?.id}}">View</p>
-            </div>
+  <div class="flexProducts">
+    <div class="product"
+      *ngFor="let product of filteredProduct | categoryImage: imageCategoryFilter | checkboxCat: arrayCategoryFilterCheckbox:arrayBrandsFilterCheckbox | pagination: currentNumberPage ">
+      <div class="hover">
+        <img [src]="product?.image" [alt]="product?.name" width="150" height="150">
+        <div class="describe">
+          <p routerLink="/store/{{product?.id}}">View</p>
         </div>
-        <p class="name">{{ product?.name }}</p>
-        <div class="flex">
-            <p class="price">{{ product?.price | number:'2.2-2' | money: selectValue }}</p>
-            <p><i class="fas fa-money-bill-wave"></i></p>
-        </div>
-        <button class="toBasket" [disabled]="existInBasket(product)" (click)="addToBasket(product)">{{existInBasket(product) ? 'In' : 'To'}} basket</button>                
+      </div>
+      <p class="name">{{ product?.name }}</p>
+      <div class="flex">
+        <p class="price">{{ product?.price | number:'2.2-2' | money: selectValue }}</p>
+        <p><i class="fas fa-money-bill-wave"></i></p>
+      </div>
+      <button class="toBasket" [disabled]="existInBasket(product)"
+        (click)="addToBasket(product)">{{existInBasket(product) ? 'In' : 'To'}} basket</button>
     </div>
-</div>
-    <div class="pagination" *ngIf="maxNumPage() > 1">
-        <div class="pagintaionButton first" (click)="first()" *ngIf="currentNumberPage != 1">FIRST</div>
-        <div class="pagintaionButton" (click)="previous()" *ngIf="currentNumberPage >= 2">PREVIOUS</div>
-        <div class="threePoints" *ngIf="currentNumberPage - 2 > 0">...</div>
-        <div class="pagintaionButton" (click)="previous()" *ngIf="currentNumberPage - 1 != 0">{{currentNumberPage - 1}}</div>
-        <div class="pagintaionButton current">{{currentNumberPage}}</div>
-        <div class="pagintaionButton" (click)="next()" *ngIf="maxNumPage() >= currentNumberPage +1">{{currentNumberPage + 1}}</div>
-        <div class="threePoints" *ngIf="maxNumPage() >= currentNumberPage + 2">...</div>
-        <div class="pagintaionButton" (click)="next()" *ngIf="maxNumPage() != currentNumberPage">NEXT</div>
-        <div class="pagintaionButton" (click)="last()" *ngIf="maxNumPage() != currentNumberPage">LAST</div>
+  </div>
+  <div class="pagination" *ngIf="maxNumPage() > 1">
+    <div class="pagintaionButton first" (click)="first()" *ngIf="currentNumberPage != 1">FIRST</div>
+    <div class="pagintaionButton" (click)="previous()" *ngIf="currentNumberPage >= 2">PREVIOUS</div>
+    <div class="threePoints" *ngIf="currentNumberPage - 2 > 0">...</div>
+    <div class="pagintaionButton" (click)="previous()" *ngIf="currentNumberPage - 1 != 0">{{currentNumberPage - 1}}
     </div>
+    <div class="pagintaionButton current">{{currentNumberPage}}</div>
+    <div class="pagintaionButton" (click)="next()" *ngIf="maxNumPage() >= currentNumberPage +1">
+      {{currentNumberPage + 1}}</div>
+    <div class="threePoints" *ngIf="maxNumPage() >= currentNumberPage + 2">...</div>
+    <div class="pagintaionButton" (click)="next()" *ngIf="maxNumPage() != currentNumberPage">NEXT</div>
+    <div class="pagintaionButton" (click)="last()" *ngIf="maxNumPage() != currentNumberPage">LAST</div>
+  </div>
 </div>

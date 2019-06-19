@@ -1,16 +1,16 @@
 <main>
-    <table class="table table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th>#</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let category of categories; let i = index;">
-                <td>{{ i+1 }}</td>
-                <td>{{ category.name }}</td>
-            </tr>
-        </tbody>
-    </table>
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th>#</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories; let i = index;">
+        <td>{{ i+1 }}</td>
+        <td>{{ category.name }}</td>
+      </tr>
+    </tbody>
+  </table>
 </main>

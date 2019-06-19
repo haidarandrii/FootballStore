@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { ProductService } from '../shared/services/product.service';
 import { IProduct } from '../shared/interfaces/product';
+import { BasketServiceService } from '../shared/services/basket-service.service';
 
 @Component({
   selector: 'app-store',
@@ -11,7 +11,9 @@ export class StoreComponent implements OnInit {
   myProducts: Array<IProduct>;
   menuClick = false;
   public scroll: number;
-  constructor(private productService: ProductService) {}
+  constructor(
+    private basketService: BasketServiceService,
+    ) {}
 
   ngOnInit() {
     this.getBasketProducts();
@@ -20,15 +22,11 @@ export class StoreComponent implements OnInit {
   onWindowScroll() {
     this.scroll = window.scrollY;
   }
-  @HostListener('click', ['$event.target'])
-  onClick(btn) {
-    this.getBasketProducts();
- }
   public showMenu(): void {
     this.menuClick = !this.menuClick;
   }
   public getBasketProducts(): void {
-    this.productService.getBasketProduct().subscribe(
+    this.basketService.getBasketProduct().subscribe(
       data => {
         this.myProducts = data;
       },

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IQuestion } from 'src/app/admin/shared/interfaces/question';
 import { Question } from 'src/app/admin/shared/clases/newQuestion';
-import { QuestionService } from 'untitled folder/src/app/admin/shared/services/question.service';
+import { QuestionService } from 'src/app/admin/shared/services/question.service';
 
 @Component({
   selector: 'app-question',
@@ -26,11 +26,9 @@ export class QuestionComponent implements OnInit {
     this.modalTrue = false;
   }
   public addQuestion(): void {
-    if (this.question === undefined) {
-
-    } else {
-    this.questionServices.addQuestionJson(new Question(this.question)).subscribe();
-    this.question = null;
+    if (this.question !== undefined) {
+      this.questionServices.addQuestionJson(new Question(this.question)).subscribe();
+      this.question = null;
     }
   }
   public getQuestions(): void {

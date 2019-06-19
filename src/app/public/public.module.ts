@@ -18,8 +18,6 @@ import { QuestionComponent } from './components/contact/question/question.compon
 import { SocialComponent } from './components/contact/social/social.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
-
 @NgModule({
   declarations: [
     PublicComponent,
@@ -39,7 +37,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     PublicRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
 
   ],
   providers: [

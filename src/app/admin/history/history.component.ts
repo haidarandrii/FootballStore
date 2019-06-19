@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderAdminService } from 'src/app/shared/services/order-admin.service';
 import { IOrder } from 'src/app/shared/interfaces/order';
+import { STATUS_DELIVERED_ORDER } from '../shared/constants';
 
 @Component({
   selector: 'app-history',
@@ -9,7 +10,10 @@ import { IOrder } from 'src/app/shared/interfaces/order';
 })
 export class HistoryComponent implements OnInit {
   orders: Array<IOrder> = [];
-  constructor(private orderService: OrderAdminService) { }
+  orderStatus = STATUS_DELIVERED_ORDER;
+  constructor(
+    private orderService: OrderAdminService,
+  ) { }
 
   ngOnInit() {
     this.getOrders();
@@ -18,10 +22,6 @@ export class HistoryComponent implements OnInit {
     this.orderService.getJsonOrderProduct().subscribe(
       data => {
         this.orders = data;
-        console.log(this.orders);
-      },
-      err => {
-        console.log(err);
       }
     );
   }

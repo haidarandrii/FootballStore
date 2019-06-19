@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { StartLoadBrands, SuccessLoadBrands, FailedLoadBrands } from 'src/app/redux/Actions/get.brands.action';
-import { ProductService } from 'src/app/shared/services/product.service';
 import { Store } from '@ngrx/store';
-import { AppState } from 'untitled folder/src/app/redux/app.state';
 import { IBrand } from 'src/app/store/shared/interface/IBrand';
 import { IProduct } from 'src/app/shared/interfaces/product';
-import { StartLoadCategories, SuccessLoadCategories } from 'src/app/redux/Actions/get.categories.actions';
-import { ICategory } from 'untitled folder/src/app/store/shared/interface/ICategory';
-import { FailedLoadCategories } from 'untitled folder/src/app/redux/Actions/get.categories.actions';
+import { StartLoadCategories, SuccessLoadCategories, FailedLoadCategories } from 'src/app/redux/Actions/get.categories.actions';
 import { AddCategory, AddBrand, PriceFilter } from 'src/app/redux/Actions/filterCategory.action';
+import { ICategory } from 'src/app/store/shared/interface/ICategory';
+import { AppState } from 'src/app/redux/app.state';
+import { BrandServiceService } from 'src/app/shared/services/brand-service.service';
+import { CategoryServiceService } from 'src/app/shared/services/category-service.service';
 
 @Component({
   selector: 'app-filters',
@@ -26,8 +26,9 @@ export class FiltersComponent implements OnInit {
   hideCategoryFilter = true;
   categories: ICategory[];
   constructor(
-    private productService: ProductService,
-    private store: Store<AppState>
+    private brandService: BrandServiceService,
+    private categoryService: CategoryServiceService,
+    private store: Store<AppState>,
   ) {
   }
 
@@ -55,16 +56,14 @@ export class FiltersComponent implements OnInit {
     } else {
       this.arrayBrands.splice(foundIndex, 1);
     }
-    console.log(this.arrayBrands);
     this.store.dispatch(new AddBrand(this.arrayBrands));
-    this.store.select('filterCategoryPage').subscribe(d => console.log(d.brands));
   }
   public getBrands(): void {
     this.store.dispatch(new StartLoadBrands());
-    this.productService.getJsonBrands().subscribe(
+    this.brandService.getJsonBrands().subscribe(
       data => {
         this.store.dispatch(new SuccessLoadBrands(data));
-        this.store.select('getBrandsPage').subscribe(d => this.brands = d.brands);
+        this.store.select('getBrandsPage').subscribe(data => this.brands = data.brands);
       },
       err => {
         this.store.dispatch(new FailedLoadBrands(err));
@@ -73,12 +72,11 @@ export class FiltersComponent implements OnInit {
   }
   public getCategories(): void {
     this.store.dispatch(new StartLoadCategories());
-    this.productService.getJsonCategory().subscribe(
+    this.categoryService.getJsonCategory().subscribe(
       data => {
         this.store.dispatch(new SuccessLoadCategories(data));
-        this.store.select('getCategoriesPage').subscribe(d => {
-          this.categories = d.categories;
-          // this.loader = d.loading;
+        this.store.select('getCategoriesPage').subscribe(data => {
+          this.categories = data.categories;
         });
 
       },

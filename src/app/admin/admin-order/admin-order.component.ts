@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderAdminService } from 'src/app/shared/services/order-admin.service';
 import { IOrder } from 'src/app/shared/interfaces/order';
+import { STATUS_DELIVERED_ORDER, STATUS_CREATED_ORDER } from '../shared/constants';
 @Component({
   selector: 'app-admin-order',
   templateUrl: './admin-order.component.html',
@@ -8,7 +9,7 @@ import { IOrder } from 'src/app/shared/interfaces/order';
 })
 export class AdminOrderComponent implements OnInit {
   orderProducts: Array<IOrder> = [];
-  result: number;
+  statusCreated = STATUS_CREATED_ORDER;
   constructor(
     private adminOrderService: OrderAdminService,
   ) {}
@@ -20,16 +21,11 @@ export class AdminOrderComponent implements OnInit {
     this.adminOrderService.getJsonOrderProduct().subscribe(
       data => {
         this.orderProducts = data;
-        console.log(this.orderProducts);
-        console.log(this.orderProducts);
-      },
-      err => {
-        console.log(err);
       }
     );
   }
   public confirm(orderProduct: IOrder): void {
-    orderProduct.status = 'delivered';
+    orderProduct.status = STATUS_DELIVERED_ORDER;
     this.adminOrderService.updateJsonOrder(orderProduct).subscribe(() => {
       this.getProductsOrder();
     }

@@ -1,8 +1,8 @@
 <div class="centr">
-    <div class="search" *ngIf="!showSearch" (click)="clickSearch()">search<i class="fas fa-search"></i></div>
-    <div class="searchField"  *ngIf="showSearch" >
-        <input placeholder="type here name of goods" type="text" class="col-7"
-            [(ngModel)]="filter" (ngModelChange)="onFilter($event)">
-    </div>
+  <div class="search" *ngIf="!showSearch" (click)="clickSearch()">search<i class="fas fa-search"></i></div>
+  <div class="searchField" *ngIf="showSearch">
+    <input placeholder="type here name of goods" type="text" class="col-7" [(ngModel)]="filter"
+      (ngModelChange)="onFilter($event)">
+  </div>
 </div>
-<div class="title" id="title">Football Store</div>
+<div class="title" id="title">{{ nameOfCompany }}</div>

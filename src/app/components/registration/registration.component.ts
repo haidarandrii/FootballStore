@@ -6,8 +6,8 @@ import { CloseForms, SingInStatus } from 'src/app/redux/Actions/actions';
 import { StartProccess, Failed, SingUp } from 'src/app/redux/Actions/register.action';
 import { User } from 'src/app/shared/clases/user';
 import { IUser } from 'src/app/shared/interfaces/user';
-import { AppState } from '../redux/app.state';
-import { UserService } from '../shared/services/user.service';
+import { AppState } from '../../redux/app.state';
+import { UserService } from '../../shared/services/user.service';
 
 @Component({
   selector: 'app-registration',
@@ -51,6 +51,7 @@ export class RegistrationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getInputTypePasswords();
   }
   public hideErrorWrongPassword(): boolean {
     const { errors, controls } = this.registerForm;
@@ -62,26 +63,15 @@ export class RegistrationComponent implements OnInit {
   public close(): void {
     this.store.dispatch(new CloseForms());
   }
+  public getInputTypePasswords(): void {
+    this.inputs = Array.from(document.getElementsByTagName('input'));
+    this.inputs = this.inputs.filter(input => input.type.toLowerCase() === 'password');
+  }
   public showPassword(): void {
-    const input = document.getElementsByTagName('input');
-    if (input.length > 0) {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < input.length; i++) {
-        if (input[i].type.toLowerCase() === 'password') {
-          this.inputs.push(input[i]);
-        }
-      }
-    }
     if (this.inputs[0].type === 'password') {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.inputs.length; i++) {
-        this.inputs[i].type = 'text';
-      }
+      this.inputs.forEach(input => input.type = 'text');
     } else {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.inputs.length; i++) {
-        this.inputs[i].type = 'password';
-      }
+      this.inputs.forEach(input => input.type = 'password');
     }
   }
   public newUser(): void {
@@ -95,7 +85,6 @@ export class RegistrationComponent implements OnInit {
     const newUser: IUser = new User(this.registerForm.value);
     this.registerForm.reset();
     this.userSerice.addUser(newUser).subscribe(() => {
-        // this.getUser();
         this.store.dispatch(new SingUp());
       });
   }
@@ -103,9 +92,6 @@ export class RegistrationComponent implements OnInit {
     this.userSerice.getUser().subscribe(
       data => {
         this.allUsers = data;
-      },
-      err => {
-        console.log(err);
       }
     );
   }

@@ -1,8 +1,8 @@
 <section>
-    <div class="centr" [formGroup]="addCategoryForm">
-        <p>New category:</p>
-        <input type="text" class="col-6" formControlName="name" placeholder="new category">
-        <input type="text" class="col-6" formControlName="image" placeholder="image (url)">
-        <button class="btn btn-success col-6" (click)="addCategory()" [disabled]="addCategoryForm.invalid">ADD</button>
-    </div>
+  <div class="centr" [formGroup]="addCategoryForm">
+    <p>New category:</p>
+    <input type="text" class="col-6" formControlName="name" placeholder="new category">
+    <input type="text" class="col-6" formControlName="image" placeholder="image (url)">
+    <button class="btn btn-success col-6" (click)="addCategory()" [disabled]="addCategoryForm.invalid">ADD</button>
+  </div>
 </section>

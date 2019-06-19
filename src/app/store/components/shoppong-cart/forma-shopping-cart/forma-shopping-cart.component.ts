@@ -6,6 +6,7 @@ import { ProductService } from 'src/app/shared/services/product.service';
 import { Order } from 'src/app/shared/clases/order';
 import { IProduct } from 'src/app/shared/interfaces/product';
 import { OrderAdminService } from 'src/app/shared/services/order-admin.service';
+import { BasketServiceService } from 'src/app/shared/services/basket-service.service';
 
 @Component({
   selector: 'app-forma-shopping-cart',
@@ -26,13 +27,13 @@ export class FormaShoppingCartComponent implements OnInit {
   };
   constructor(
     private store: Store<AppState>,
-    private productService: ProductService,
-    private orderAdminService: OrderAdminService
+    private basketService: BasketServiceService,
+    private orderAdminService: OrderAdminService,
   ) {
-    this.store.select('registerPage').subscribe(d => {
-      if (d.currentUser !== undefined) {
-        this.order.firstName = d.currentUser.firstName;
-        this.order.secondName = d.currentUser.secondName;
+    this.store.select('registerPage').subscribe(data => {
+      if (data.currentUser !== undefined) {
+        this.order.firstName = data.currentUser.firstName;
+        this.order.secondName = data.currentUser.secondName;
     }
     });
   }
@@ -42,43 +43,38 @@ export class FormaShoppingCartComponent implements OnInit {
   }
   public getBasketProduct(): void {
     this.store.dispatch(new StartLoadBasketProduct());
-    this.productService.getBasketProduct().subscribe(
+    this.basketService.getBasketProduct().subscribe(
       data => {
         this.store.dispatch(new SuccessLoadBaskerProduct(data));
-        this.store.select('basketProductPage').subscribe(d => {
-          this.myProducts = d.basketProduct;
-          console.log(this.myProducts);
+        this.store.select('basketProductPage').subscribe(data => {
+          this.myProducts = data.basketProduct;
         });
       },
       err => {
         this.store.dispatch(new FailedLoadBasketProduct(err));
       }
     );
-    console.log(this.myProducts);
   }
   public fullPrice(): number {
-    const result = this.myProducts.reduce((acum, a) => {
-      return acum + a.price;
+    const result = this.myProducts.reduce((acum, product) => {
+      return acum + product.price;
     }, 0);
     return result;
   }
   public confirm(): void {
-    this.orderAdminService.addJsonOrderProduct(new Order(this.myProducts,
-      this.order.firstName, this.order.secondName, this.order.address, 'created')).subscribe();
-      // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < this.myProducts.length; i++ ) {
-      const index = this.myProducts[i].id;
-      this.productService.delBasketsProducts(index).subscribe(() => {
-        this.getBasketProduct();
+    this.orderAdminService.addJsonOrderProduct(new Order(this.myProducts, this.order, 'created')).subscribe();
+    this.myProducts.forEach(product => {
+      this.basketService.delBasketsProducts(product.id).subscribe(() => {
+          this.getBasketProduct();
       });
-    }
-    this.order = null;
+    });
     this.confirmModalTrue = false;
     this.goHomeTrue = true;
   }
   public modalSuccesTrue(): void {
-    if ((this.order.firstName === '' || undefined)
-    || (this.order.secondName === '' || undefined) || (this.order.address === undefined || '')) {
+    if ((this.order.firstName === '' || undefined) ||
+    (this.order.secondName === '' || undefined) ||
+    (this.order.address === undefined || '')) {
       this.modalTrue = true;
     } else {
     this.modalSuccess = true;

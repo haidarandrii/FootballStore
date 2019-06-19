@@ -1,20 +1,18 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { moneyObject } from './object.money.pipe';
 
 @Pipe({
   name: 'money'
 })
 export class MoneyPipe implements PipeTransform {
 
-  transform(price: number, value: string): string {
-    if (value === 'EUR') {
-      return '€ ' + Math.floor(price * 0.87) + '.00';
-    } else if (value === 'GRN') {
-      return  price * 27 + ' грн';
-     } else if (value === 'DOLLAR') {
-       return '$ ' + price;
-     } else if (value === 'GBP') {
-       return '£ ' + Math.floor(price * 0.75) + '.00';
-     }
+  transform(price: number, currency: string): string {
+    const {
+      prefix,
+      multiplier,
+      suffix,
+    } = moneyObject[currency];
+    return `${prefix} ${Math.floor(price * multiplier)} ${suffix}`;
   }
 
 }

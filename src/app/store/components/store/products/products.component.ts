@@ -6,6 +6,8 @@ import { StartLoadBasketProduct, SuccessLoadBaskerProduct, FailedLoadBasketProdu
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
 import { ProductService } from 'src/app/shared/services/product.service';
+import { BasketServiceService } from 'src/app/shared/services/basket-service.service';
+import { PRODUCTS_ON_ONE_PAGE } from 'src/app/store/shared/const';
 
 @Component({
   selector: 'app-products',
@@ -25,20 +27,15 @@ export class ProductsComponent implements OnInit {
   constructor(
     private viewService: ViewService,
     private store: Store<AppState>,
-    private productService: ProductService
+    private productService: ProductService,
+    private basketService: BasketServiceService,
     ) {
-      this.store.select('filterCategoryPage').subscribe(d => this.selectValue = d.priceFilter);
-      this.store.select('filterCategoryPage').subscribe(d =>  {
-        this.arrayCategoryFilterCheckbox = d.categories;
-      });
-      this.store.select('filterCategoryPage').subscribe(d => {
-        this.arrayBrandsFilterCheckbox = d.brands;
-      });
-      this.store.select('filterCategoryPage').subscribe(d => {
-        this.imageCategoryFilter = d.imageCategory;
-      });
-      this.store.select('filterCategoryPage').subscribe(d => {
-        this.filterValue = d.valueInput;
+      this.store.select('filterCategoryPage').subscribe(data => this.selectValue = data.priceFilter);
+      this.store.select('filterCategoryPage').subscribe(data => this.arrayCategoryFilterCheckbox = data.categories);
+      this.store.select('filterCategoryPage').subscribe(data => this.arrayBrandsFilterCheckbox = data.brands);
+      this.store.select('filterCategoryPage').subscribe(data => this.imageCategoryFilter = data.imageCategory);
+      this.store.select('filterCategoryPage').subscribe(data => {
+        this.filterValue = data.valueInput;
         this.onFilter();
       });
     }
@@ -54,8 +51,7 @@ export class ProductsComponent implements OnInit {
     this.currentNumberPage = 1;
   }
   public addToBasket(product: IProduct): void {
-
-    this.productService.addBasketProducts(product).subscribe(() => {
+    this.basketService.addBasketProducts(product).subscribe(() => {
       this.getBasketProduct();
       this.store.dispatch(new SuccessLoadBaskerProduct(this.basketProduct));
     });
@@ -65,9 +61,9 @@ export class ProductsComponent implements OnInit {
     this.productService.getJsonProduct().subscribe(
       data => {
         this.store.dispatch(new SuccessLoadProduct(data));
-        this.store.select('productPage').subscribe(d => {
-          this.products = d.products;
-          this.filteredProduct = d.products;
+        this.store.select('productPage').subscribe(data => {
+          this.products = data.products;
+          this.filteredProduct = data.products;
         });
       },
       err => {
@@ -77,11 +73,11 @@ export class ProductsComponent implements OnInit {
   }
   public getBasketProduct(): void {
     this.store.dispatch(new StartLoadBasketProduct());
-    this.productService.getBasketProduct().subscribe(
+    this.basketService.getBasketProduct().subscribe(
       data => {
         this.store.dispatch(new SuccessLoadBaskerProduct(data));
-        this.store.select('basketProductPage').subscribe(d => {
-          this.basketProduct = d.basketProduct;
+        this.store.select('basketProductPage').subscribe(data => {
+          this.basketProduct = data.basketProduct;
         });
       },
       err => {
@@ -90,37 +86,32 @@ export class ProductsComponent implements OnInit {
     );
   }
   public existInBasket(currentProduct: IProduct): boolean {
-    this.basketCounter();
     return this.basketProduct.some(product => product.id === currentProduct.id);
   }
-// PAGINATION
-public previous(): void {
-  this.currentNumberPage --;
-  this.toTop();
-}
-public next(): void {
-  this.currentNumberPage ++;
-  this.toTop();
-}
-public last(): void {
-  this.currentNumberPage = this.maxNumPage();
-  this.toTop();
-}
-public first(): void {
-  this.currentNumberPage = 1;
-  this.toTop();
-}
-public toTop(): void {
-  const titleTop = document.getElementById('toTop').offsetTop;
-  window.scrollTo({
-    top: titleTop - 100,
-    behavior: 'smooth'
-});
-}
-public maxNumPage(): number {
-  return Math.ceil(this.viewService.arrayProductLength / 10);
-}
-public basketCounter(): void {
-  this.productService.countBasket = this.basketProduct.length;
-}
+  public previous(): void {
+    this.currentNumberPage --;
+    this.toTop();
+  }
+  public next(): void {
+    this.currentNumberPage ++;
+    this.toTop();
+  }
+  public last(): void {
+    this.currentNumberPage = this.maxNumPage();
+    this.toTop();
+  }
+  public first(): void {
+    this.currentNumberPage = 1;
+    this.toTop();
+  }
+  public toTop(): void {
+    const titleTop = document.getElementById('toTop').offsetTop;
+    window.scrollTo({
+      top: titleTop - 100,
+      behavior: 'smooth'
+    });
+  }
+  public maxNumPage(): number {
+    return Math.ceil(this.viewService.arrayProductLength / PRODUCTS_ON_ONE_PAGE);
+  }
 }

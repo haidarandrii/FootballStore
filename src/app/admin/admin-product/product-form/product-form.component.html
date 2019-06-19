@@ -73,11 +73,11 @@
     </div>
   </div>
   <button 
-    *ngIf="!updateTrue" 
+    *ngIf="!showAddButton" 
     type="button" 
     class="btn btn-success col-12" 
     (click)="addProduct()"
     [disabled]="addProductForm.invalid">ADD</button>
- <button *ngIf="updateTrue" type="button" class="btn btn-warning col-12" (click)="saveJsonProduct()">UPDATE</button>
+ <button *ngIf="showAddButton" type="button" class="btn btn-warning col-12" (click)="saveJsonProduct()">UPDATE</button>
 </form>
 </div>

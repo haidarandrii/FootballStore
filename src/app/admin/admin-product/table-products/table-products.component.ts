@@ -17,8 +17,8 @@ export class TableProductsComponent implements OnInit {
     private productService: ProductService,
     private store: Store<AppState>
   ) {
-    this.store.select('adminPage').subscribe(d => {
-      this.product = d.addProduct;
+    this.store.select('adminPage').subscribe(data => {
+      this.product = data.addProduct;
       this.getProducts();
     });
   }
@@ -29,11 +29,7 @@ export class TableProductsComponent implements OnInit {
   public getProducts(): void {
     this.productService.getJsonProduct().subscribe(
       data => {
-        console.log(data);
         this.products = data;
-      },
-      err => {
-        console.log(err);
       }
     );
   }

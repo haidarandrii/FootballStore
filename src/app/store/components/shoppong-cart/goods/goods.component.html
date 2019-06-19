@@ -1,9 +1,9 @@
 <div class="products">
-    <div class="product" *ngFor="let product of myProducts">
-      <img [src]="product.image" width="150" height="150" [alt]="product.name">
-      <p>{{product.name}}</p>
-      <p>{{product.brands}}</p>
-      <p>{{product.price | currency}}</p>
-      <button class="btn btn-danger" (click)="delProductBasket(product)">DELETE</button>
-    </div>
+  <div class="product" *ngFor="let product of myProducts">
+    <img [src]="product.image" width="150" height="150" [alt]="product.name">
+    <p>{{product.name}}</p>
+    <p>{{product.brands}}</p>
+    <p>{{product.price | currency}}</p>
+    <button class="btn btn-danger" (click)="delProductBasket(product)">DELETE</button>
   </div>
+</div>

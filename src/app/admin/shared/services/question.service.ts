@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IQuestion } from '../interfaces/question';
+import { GENERAL_URL, QUESTION_URL } from 'src/app/shared/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { IQuestion } from '../interfaces/question';
 export class QuestionService {
   url: string;
   constructor(private http: HttpClient) {
-    this.url = 'http://localhost:3000/question';
+    this.url = `${GENERAL_URL}${QUESTION_URL}`;
   }
   public getQuestionJson(): Observable<Array<IQuestion>> {
     return this.http.get<Array<IQuestion>>(this.url);

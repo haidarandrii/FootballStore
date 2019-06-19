@@ -1,6 +1,6 @@
 <main>
   <div class="title">ORDERS</div>
-  <div *ngFor="let orderProduct of orderProducts | orderStatus: 'created'; let i = index ">
+  <div *ngFor="let orderProduct of orderProducts | orderStatus: statusCreated; let i = index ">
     <p class="number">Order # {{i+1}}</p>
   <table class="table">
     <thead>

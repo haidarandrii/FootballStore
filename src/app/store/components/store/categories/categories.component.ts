@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ICategory } from 'src/app/store/shared/interface/ICategory';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
-import { ProductService } from 'src/app/shared/services/product.service';
 import { StartLoadCategories, SuccessLoadCategories, FailedLoadCategories } from 'src/app/redux/Actions/get.categories.actions';
 import { AddImageCategory } from 'src/app/redux/Actions/filterCategory.action';
+import { CategoryServiceService } from 'src/app/shared/services/category-service.service';
 
 @Component({
   selector: 'app-categories',
@@ -17,7 +17,8 @@ export class CategoriesComponent implements OnInit {
   imageCategory: string;
   constructor(
     private store: Store<AppState>,
-    private productService: ProductService, ) {
+    private categoryService: CategoryServiceService,
+    ) {
       this.getCategories();
     }
 
@@ -25,12 +26,12 @@ export class CategoriesComponent implements OnInit {
   }
   public getCategories(): void {
     this.store.dispatch(new StartLoadCategories());
-    this.productService.getJsonCategory().subscribe(
+    this.categoryService.getJsonCategory().subscribe(
       data => {
         this.store.dispatch(new SuccessLoadCategories(data));
-        this.store.select('getCategoriesPage').subscribe(d => {
-          this.categories = d.categories;
-          this.loader = d.loading;
+        this.store.select('getCategoriesPage').subscribe(data => {
+          this.categories = data.categories;
+          this.loader = data.loading;
         });
       },
       err => {
@@ -40,11 +41,6 @@ export class CategoriesComponent implements OnInit {
   }
   public clickOnCategory(category: string): void {
     this.store.dispatch(new AddImageCategory(category));
-    // this.currentNumberPage = 1;
-    // this.arrayCategory = [];
-    // this.hideCategoryFilter = false;
-    // this.imageCategory = category;
-    // this.toTop();
   }
 
 }

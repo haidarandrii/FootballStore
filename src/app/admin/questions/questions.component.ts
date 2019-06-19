@@ -34,7 +34,7 @@ export class QuestionsComponent implements OnInit {
       this.empty = false;
       this.modal = false;
       this.currentQuestion.answer = this.answer;
-      this.answer = undefined;
+      this.answer = '';
       this.questionService.updateJsonQuestion(this.currentQuestion).subscribe();
     }
   }
@@ -42,9 +42,6 @@ export class QuestionsComponent implements OnInit {
     this.questionService.getQuestionJson().subscribe(
       data => {
         this.questions = data;
-      },
-      err => {
-        console.log(err);
       }
     );
   }

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ProductService } from 'src/app/shared/services/product.service';
 import { IBrand } from 'src/app/store/shared/interface/IBrand';
 import { AddBrand } from 'src/app/redux/Actions/admin.actions';
 import { AppState } from 'src/app/redux/app.state';
 import { FormControl, Validators } from '@angular/forms';
+import { BrandServiceService } from 'src/app/shared/services/brand-service.service';
 
 @Component({
   selector: 'app-form-add-brand',
@@ -20,31 +20,18 @@ export class FormAddBrandComponent implements OnInit {
   // brand: string;
   constructor(
     private store: Store<AppState>,
-    private productService: ProductService
+    private brandService: BrandServiceService
   ) { }
 
   ngOnInit() {
   }
   public addBrand(): void {
-      console.log(this.brand);
-      const newBrand: IBrand = {
-        name: this.brand.value,
-      };
-      this.productService.addJsonBrand(newBrand).subscribe(() => {
-        this.getBrands();
-        this.store.dispatch(new AddBrand(this.brand.value));
-      });
-      this.brand.reset();
+    const newBrand: IBrand = {
+      name: this.brand.value,
+    };
+    this.brandService.addJsonBrand(newBrand).subscribe(() => {
+      this.store.dispatch(new AddBrand(this.brand.value));
+    });
+    this.brand.reset();
   }
-  public getBrands(): void {
-    this.productService.getJsonBrands().subscribe(
-      data => {
-        this.brands = data;
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
 }
